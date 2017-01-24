@@ -52,3 +52,5 @@ dis/
 .classpath
 .project
 .settings/
+.gitignore
+.gitattributes
