@@ -1,0 +1,216 @@
+
+tilepack.png
+size: 256,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+brendan_stand_east
+  rotate: false
+  xy: 52, 20
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_east
+  rotate: false
+  xy: 52, 20
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_stand_north
+  rotate: false
+  xy: 84, 60
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_north
+  rotate: false
+  xy: 84, 60
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_stand_south
+  rotate: false
+  xy: 118, 102
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_south
+  rotate: false
+  xy: 118, 102
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_stand_west
+  rotate: false
+  xy: 136, 102
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_west
+  rotate: false
+  xy: 136, 102
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_walk_east
+  rotate: false
+  xy: 154, 102
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_walk_east
+  rotate: false
+  xy: 172, 102
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_walk_north
+  rotate: false
+  xy: 190, 102
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_walk_north
+  rotate: false
+  xy: 208, 102
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_walk_south
+  rotate: false
+  xy: 226, 102
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_walk_south
+  rotate: false
+  xy: 102, 60
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_walk_west
+  rotate: false
+  xy: 70, 20
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_walk_west
+  rotate: false
+  xy: 88, 34
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+flowers
+  rotate: false
+  xy: 52, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 0
+flowers
+  rotate: false
+  xy: 70, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+flowers
+  rotate: false
+  xy: 88, 16
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+grass
+  rotate: false
+  xy: 106, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+grass1
+  rotate: false
+  xy: 106, 24
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+grass2
+  rotate: false
+  xy: 106, 6
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+indoor_tiles
+  rotate: false
+  xy: 120, 84
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+indoor_tiles_shadow
+  rotate: false
+  xy: 120, 66
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+large_tree
+  rotate: false
+  xy: 84, 86
+  size: 32, 40
+  orig: 32, 40
+  offset: 0, 0
+  index: -1
+rug
+  rotate: false
+  xy: 2, 13
+  size: 48, 31
+  orig: 48, 31
+  offset: 0, 0
+  index: -1
+sign
+  rotate: false
+  xy: 138, 84
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+small_house
+  rotate: false
+  xy: 2, 46
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+wall_bottom
+  rotate: false
+  xy: 138, 66
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_top
+  rotate: false
+  xy: 156, 84
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1

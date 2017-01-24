@@ -1,0 +1,76 @@
+
+uipack.png
+size: 64,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+arrow
+  rotate: false
+  xy: 33, 39
+  size: 6, 10
+  orig: 6, 10
+  offset: 0, 0
+  index: -1
+background_hpbar
+  rotate: false
+  xy: 2, 2
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+battleinfobox
+  rotate: false
+  xy: 2, 29
+  size: 29, 29
+  orig: 29, 29
+  offset: 0, 0
+  index: -1
+dialoguebox
+  rotate: false
+  xy: 2, 14
+  size: 23, 13
+  orig: 23, 13
+  offset: 0, 0
+  index: -1
+green
+  rotate: false
+  xy: 50, 57
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+hpbar_bar
+  rotate: false
+  xy: 2, 5
+  size: 51, 7
+  orig: 51, 7
+  offset: 0, 0
+  index: -1
+hpbar_side
+  rotate: false
+  xy: 33, 51
+  size: 15, 7
+  orig: 15, 7
+  offset: 0, 0
+  index: -1
+optionbox
+  rotate: false
+  xy: 27, 14
+  size: 13, 13
+  orig: 13, 13
+  offset: 0, 0
+  index: -1
+red
+  rotate: false
+  xy: 33, 36
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+yellow
+  rotate: false
+  xy: 41, 48
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1

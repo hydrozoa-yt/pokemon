@@ -1,0 +1,22 @@
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+varying vec4 v_color;
+varying vec2 v_texCoords;
+
+uniform sampler2D u_texture;
+uniform sampler2D u_mask;
+
+uniform float u_mix;
+
+void main() {
+	vec4 color1 = texture2D(u_texture, v_texCoords);
+	vec4 color2 = texture2D(u_mask, v_texCoords);
+	
+	if (color1.a == 0) {
+		discard;
+	}
+	
+	gl_FragColor = mix(color1, color2, u_mix);
+}
