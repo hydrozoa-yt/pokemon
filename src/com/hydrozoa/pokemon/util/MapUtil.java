@@ -1,5 +1,7 @@
 package com.hydrozoa.pokemon.util;
 
+import java.util.Random;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -12,8 +14,10 @@ import com.hydrozoa.pokemon.model.DIRECTION;
 import com.hydrozoa.pokemon.model.TERRAIN;
 import com.hydrozoa.pokemon.model.TeleportTile;
 import com.hydrozoa.pokemon.model.Tile;
-import com.hydrozoa.pokemon.model.World;
-import com.hydrozoa.pokemon.model.WorldObject;
+import com.hydrozoa.pokemon.model.actor.NPCActor;
+import com.hydrozoa.pokemon.model.actor.RandomWalkingBehavior;
+import com.hydrozoa.pokemon.model.world.World;
+import com.hydrozoa.pokemon.model.world.WorldObject;
 import com.hydrozoa.pokemon.model.world.script.WorldInterface;
 
 /**
@@ -25,17 +29,23 @@ public class MapUtil {
 	
 	private Animation flowerAnimation;
 	
+	private AnimationSet npcAnimations;
+	
 	private AssetManager assetManager;
 	private WorldInterface worldInterface;
 	
-	public MapUtil(AssetManager assetManager, WorldInterface worldInterface) {
+	public MapUtil(AssetManager assetManager, WorldInterface worldInterface, AnimationSet npcAnimations) {
 		this.assetManager = assetManager;
 		this.worldInterface = worldInterface;
+		this.npcAnimations = npcAnimations;
 		
 		TextureAtlas atlas = assetManager.get("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
 		flowerAnimation = new Animation(0.8f, atlas.findRegions("flowers"), PlayMode.LOOP_PINGPONG);
 	}
 	
+	/**
+	 * @return	An outdoors test-level.
+	 */
 	public World loadWorld1() {
 		World world = new World("test_level",20,20);
 		for (int xi = 0; xi < 20; xi++) {
@@ -65,9 +75,15 @@ public class MapUtil {
 				addFlowers(world,xr,yr);
 			}
 		}
+		
+		world.addActor(new NPCActor(world, 3, 3, npcAnimations, new RandomWalkingBehavior(1f, 4f, new Random())));
+		
 		return world;
 	}
 	
+	/**
+	 * @return	An indoors test-level.
+	 */
 	public World loadWorld2() {
 		World world = new World("test_indoors",10,10);
 		for (int x = 0; x < 10; x++) {

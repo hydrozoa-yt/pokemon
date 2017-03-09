@@ -5,26 +5,27 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
+ * XXX: Not really necessary. This should be implemented in the BattleEventPlayer.
+ * 
  * @author hydrozoa
  */
 public class EventQueue {
 	
-	private ArrayDeque<Event> events = new ArrayDeque<Event>();
+	private ArrayDeque<BattleEvent> events = new ArrayDeque<BattleEvent>();
 	
-	public void addEvent(Event e) {
+	public void addEvent(BattleEvent e) {
 		events.add(e);
 	}
 	
-	public Event peek() {
+	public BattleEvent peek() {
 		return events.peek();
 	}
 	
-	public Event pop() {
+	public BattleEvent pop() {
 		return events.pop();
 	}
 	
-	public Collection<Event> getEvents() {
+	public Collection<BattleEvent> getEvents() {
 		return Collections.unmodifiableCollection(events);
 	}
-
 }

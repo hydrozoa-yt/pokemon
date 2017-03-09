@@ -1,7 +1,11 @@
-package com.hydrozoa.pokemon.model;
+package com.hydrozoa.pokemon.model.actor;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
+import com.hydrozoa.pokemon.model.DIRECTION;
+import com.hydrozoa.pokemon.model.YSortable;
+import com.hydrozoa.pokemon.model.world.World;
+import com.hydrozoa.pokemon.model.world.WorldObject;
 import com.hydrozoa.pokemon.util.AnimationSet;
 
 /**
@@ -57,7 +61,7 @@ public class Actor implements YSortable {
 			if (animTimer > WALK_TIME_PER_TILE) {
 				float leftOverTime = animTimer - WALK_TIME_PER_TILE;
 				finishMove();
-				if (moveRequestThisFrame) {
+				if (moveRequestThisFrame) { // keep walking using the same animation time
 					if (move(facing)) {
 						animTimer += leftOverTime;
 						worldX = Interpolation.linear.apply(srcX, destX, animTimer / WALK_TIME_PER_TILE);
@@ -89,6 +93,11 @@ public class Actor implements YSortable {
 		animTimer = 0f;
 	}
 	
+	/**
+	 * Initializes a move. If you want to move an Actor, use this method.
+	 * @param dir	Direction to move
+	 * @return		If the move can be performed
+	 */
 	public boolean move(DIRECTION dir) {
 		if (state == ACTOR_STATE.WALKING) {
 			if (facing == dir) {
@@ -209,5 +218,9 @@ public class Actor implements YSortable {
 		this.world.removeActor(this);
 		this.world = world;
 		this.world.addActor(this);
+	}
+	
+	public ACTOR_STATE getState() {
+		return state;
 	}
 }

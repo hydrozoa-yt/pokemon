@@ -1,5 +1,8 @@
 package com.hydrozoa.pokemon.model;
 
+import com.hydrozoa.pokemon.model.actor.Actor;
+import com.hydrozoa.pokemon.model.world.WorldObject;
+
 /**
  * @author hydrozoa
  */

@@ -1,5 +1,6 @@
-package com.hydrozoa.pokemon.model;
+package com.hydrozoa.pokemon.model.actor;
 
+import com.hydrozoa.pokemon.model.world.World;
 import com.hydrozoa.pokemon.util.AnimationSet;
 
 /**

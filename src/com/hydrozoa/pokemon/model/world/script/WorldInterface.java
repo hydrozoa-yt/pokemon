@@ -2,7 +2,7 @@ package com.hydrozoa.pokemon.model.world.script;
 
 import com.badlogic.gdx.graphics.Color;
 import com.hydrozoa.pokemon.model.DIRECTION;
-import com.hydrozoa.pokemon.model.World;
+import com.hydrozoa.pokemon.model.world.World;
 
 /**
  * @author hydrozoa

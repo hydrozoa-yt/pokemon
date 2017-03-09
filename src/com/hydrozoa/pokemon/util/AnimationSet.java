@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.hydrozoa.pokemon.model.DIRECTION;
 
 /**
+ * A set of TextureRegions and Animations that can be applied to an Actor.
+ * 
  * @author hydrozoa
  */
 public class AnimationSet {

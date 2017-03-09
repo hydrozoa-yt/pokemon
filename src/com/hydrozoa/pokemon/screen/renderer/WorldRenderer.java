@@ -10,12 +10,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.hydrozoa.pokemon.Settings;
-import com.hydrozoa.pokemon.model.Actor;
 import com.hydrozoa.pokemon.model.Camera;
 import com.hydrozoa.pokemon.model.TERRAIN;
-import com.hydrozoa.pokemon.model.World;
-import com.hydrozoa.pokemon.model.WorldObject;
 import com.hydrozoa.pokemon.model.YSortable;
+import com.hydrozoa.pokemon.model.actor.Actor;
+import com.hydrozoa.pokemon.model.world.World;
+import com.hydrozoa.pokemon.model.world.WorldObject;
 
 /**
  * @author hydrozoa

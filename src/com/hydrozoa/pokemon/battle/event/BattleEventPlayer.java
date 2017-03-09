@@ -11,7 +11,7 @@ import aurelienribon.tweenengine.TweenManager;
 /**
  * @author hydrozoa
  */
-public interface EventPlayer {
+public interface BattleEventPlayer {
 	
 	public void playBattleAnimation(BattleAnimation animation, BATTLE_PARTY party);
 	

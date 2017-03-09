@@ -1,4 +1,4 @@
-package com.hydrozoa.pokemon.model;
+package com.hydrozoa.pokemon.model.world;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
+import com.hydrozoa.pokemon.model.YSortable;
 
 /**
  * Object in the world. This can be a sign, a tree or some flowers.

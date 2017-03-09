@@ -5,10 +5,11 @@ import com.badlogic.gdx.Input.Keys;
 import com.hydrozoa.pokemon.ui.DialogueBox;
 
 /**
- * displays text
+ * A BattleEvent where text is displayed in the BattleScreen's DialogueBox.
+ * 
  * @author hydrozoa
  */
-public class TextEvent extends Event {
+public class TextEvent extends BattleEvent {
 	
 	private boolean finished = false;
 	
@@ -36,7 +37,7 @@ public class TextEvent extends Event {
 	}
 	
 	@Override
-	public void begin(EventPlayer player) {
+	public void begin(BattleEventPlayer player) {
 		super.begin(player);
 		dialogue = player.getDialogueBox();
 		dialogue.setVisible(true);

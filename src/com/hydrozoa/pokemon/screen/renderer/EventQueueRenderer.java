@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.hydrozoa.pokemon.battle.event.Event;
+import com.hydrozoa.pokemon.battle.event.BattleEvent;
 import com.hydrozoa.pokemon.battle.event.EventQueue;
 
 /**
@@ -33,11 +33,11 @@ public class EventQueueRenderer {
 		layout = new GlyphLayout();
 	}
 	
-	public void render(SpriteBatch batch, Event event) {
+	public void render(SpriteBatch batch, BattleEvent event) {
 		renderEvent(batch, event.getClass().getSimpleName(), 0);
 		
 		float y = boxHeight + 10f;
-		for (Event e : eventQueue.getEvents()) {
+		for (BattleEvent e : eventQueue.getEvents()) {
 			renderEvent(batch, e.getClass().getSimpleName(), y);
 			y += boxHeight;
 		}

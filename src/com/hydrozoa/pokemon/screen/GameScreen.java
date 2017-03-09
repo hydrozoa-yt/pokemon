@@ -22,8 +22,8 @@ import com.hydrozoa.pokemon.dialogue.Dialogue;
 import com.hydrozoa.pokemon.dialogue.DialogueNode;
 import com.hydrozoa.pokemon.model.Camera;
 import com.hydrozoa.pokemon.model.DIRECTION;
-import com.hydrozoa.pokemon.model.PlayerActor;
-import com.hydrozoa.pokemon.model.World;
+import com.hydrozoa.pokemon.model.actor.PlayerActor;
+import com.hydrozoa.pokemon.model.world.World;
 import com.hydrozoa.pokemon.model.world.script.WorldInterface;
 import com.hydrozoa.pokemon.screen.renderer.WorldRenderer;
 import com.hydrozoa.pokemon.screen.transition.Action;
@@ -84,7 +84,7 @@ public class GameScreen extends AbstractScreen implements WorldInterface {
 				atlas.findRegion("brendan_stand_west")
 		);
 		
-		mapUtil = new MapUtil(app.getAssetManager(), this);
+		mapUtil = new MapUtil(app.getAssetManager(), this, animations);
 		worlds.put("test_level", mapUtil.loadWorld1());
 		worlds.put("test_indoors", mapUtil.loadWorld2());
 		

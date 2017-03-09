@@ -7,11 +7,11 @@ import com.hydrozoa.pokemon.ui.HPBar;
 import com.hydrozoa.pokemon.ui.StatusBox;
 
 /**
- * Responsible for the animation depleting the HPBar of a newly attacked Pokemon.
+ * A BattleEvent where HP can be seen, depleting.
  * 
  * @author hydrozoa
  */
-public class HPAnimationEvent extends Event {
+public class HPAnimationEvent extends BattleEvent {
 	
 	private BATTLE_PARTY party;
 	
@@ -20,7 +20,7 @@ public class HPAnimationEvent extends Event {
 	private int hpTotal;
 	private float duration;
 	
-	private EventPlayer eventPlayer;
+	private BattleEventPlayer eventPlayer;
 	private float timer;
 	private boolean finished;
 	
@@ -55,7 +55,7 @@ public class HPAnimationEvent extends Event {
 	}
 
 	@Override
-	public void begin(EventPlayer player) {
+	public void begin(BattleEventPlayer player) {
 		super.begin(player);
 		this.eventPlayer = player;
 	}

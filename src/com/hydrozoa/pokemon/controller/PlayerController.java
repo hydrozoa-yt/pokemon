@@ -2,8 +2,8 @@ package com.hydrozoa.pokemon.controller;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
-import com.hydrozoa.pokemon.model.Actor;
 import com.hydrozoa.pokemon.model.DIRECTION;
+import com.hydrozoa.pokemon.model.actor.Actor;
 
 /**
  * @author hydrozoa

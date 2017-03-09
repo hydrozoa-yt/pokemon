@@ -4,20 +4,22 @@ import com.hydrozoa.pokemon.battle.BATTLE_PARTY;
 import com.hydrozoa.pokemon.battle.animation.BattleAnimation;
 
 /**
+ * A BattleEvent where a BattleAnimation is played.
+ * 
  * @author hydrozoa
  */
-public class AnimationEvent extends Event {
+public class AnimationBattleEvent extends BattleEvent {
 	
 	private BATTLE_PARTY primary;
 	private BattleAnimation animation;
 
-	public AnimationEvent(BATTLE_PARTY primary, BattleAnimation animation) {
+	public AnimationBattleEvent(BATTLE_PARTY primary, BattleAnimation animation) {
 		this.animation = animation;
 		this.primary = primary;
 	}
 
 	@Override
-	public void begin(EventPlayer player) {
+	public void begin(BattleEventPlayer player) {
 		super.begin(player);
 		player.playBattleAnimation(animation, primary);
 	}

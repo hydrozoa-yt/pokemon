@@ -1,9 +1,11 @@
-package com.hydrozoa.pokemon.model;
+package com.hydrozoa.pokemon.model.world;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.hydrozoa.pokemon.model.TileMap;
+import com.hydrozoa.pokemon.model.actor.Actor;
 
 /**
  * Contains data about the game world, such as references to Actors, and WorldObjects.

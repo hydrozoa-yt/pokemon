@@ -1,15 +1,15 @@
 package com.hydrozoa.pokemon.battle.event;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.hydrozoa.pokemon.battle.BATTLE_PARTY;
 
 /**
- * Changes the Pokemon sprites in the battle.
+ * A BattleEvent where a Pokemon's sprite is changed.
+ * This event takes no time.
  * 
  * @author hydrozoa
  */
-public class PokeSpriteEvent extends Event {
+public class PokeSpriteEvent extends BattleEvent {
 	
 	private Texture region;
 	private BATTLE_PARTY party;
@@ -20,7 +20,7 @@ public class PokeSpriteEvent extends Event {
 	}
 	
 	@Override
-	public void begin(EventPlayer player) {
+	public void begin(BattleEventPlayer player) {
 		super.begin(player);
 		player.setPokemonSprite(region, party);
 	}

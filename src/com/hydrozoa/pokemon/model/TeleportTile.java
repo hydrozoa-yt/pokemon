@@ -1,6 +1,9 @@
 package com.hydrozoa.pokemon.model;
 
 import com.badlogic.gdx.graphics.Color;
+import com.hydrozoa.pokemon.model.actor.Actor;
+import com.hydrozoa.pokemon.model.actor.PlayerActor;
+import com.hydrozoa.pokemon.model.world.World;
 import com.hydrozoa.pokemon.model.world.script.WorldInterface;
 
 /**

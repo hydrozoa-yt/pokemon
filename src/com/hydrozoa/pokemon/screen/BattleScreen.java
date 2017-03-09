@@ -18,17 +18,14 @@ import com.hydrozoa.pokemon.battle.Battle.STATE;
 import com.hydrozoa.pokemon.battle.BattleObserver;
 import com.hydrozoa.pokemon.battle.Trainer;
 import com.hydrozoa.pokemon.battle.animation.BattleAnimation;
-import com.hydrozoa.pokemon.battle.event.Event;
-import com.hydrozoa.pokemon.battle.event.EventPlayer;
+import com.hydrozoa.pokemon.battle.event.BattleEvent;
+import com.hydrozoa.pokemon.battle.event.BattleEventPlayer;
 import com.hydrozoa.pokemon.battle.event.EventQueue;
 import com.hydrozoa.pokemon.controller.BattleScreenController;
 import com.hydrozoa.pokemon.model.Pokemon;
 import com.hydrozoa.pokemon.screen.renderer.BattleDebugRenderer;
 import com.hydrozoa.pokemon.screen.renderer.BattleRenderer;
 import com.hydrozoa.pokemon.screen.renderer.EventQueueRenderer;
-import com.hydrozoa.pokemon.screen.transition.Action;
-import com.hydrozoa.pokemon.screen.transition.FadeInTransition;
-import com.hydrozoa.pokemon.screen.transition.FadeOutTransition;
 import com.hydrozoa.pokemon.ui.DetailedStatusBox;
 import com.hydrozoa.pokemon.ui.DialogueBox;
 import com.hydrozoa.pokemon.ui.MoveSelectBox;
@@ -40,13 +37,13 @@ import aurelienribon.tweenengine.TweenManager;
 /**
  * @author hydrozoa
  */
-public class BattleScreen extends AbstractScreen implements BattleObserver, EventPlayer {
+public class BattleScreen extends AbstractScreen implements BattleObserver, BattleEventPlayer {
 	
 	/* Controller */
 	private BattleScreenController controller;
 	
 	/* Event system */
-	private Event currentEvent;
+	private BattleEvent currentEvent;
 	private EventQueue queue = new EventQueue();
 	
 	/* Model */
@@ -269,7 +266,7 @@ public class BattleScreen extends AbstractScreen implements BattleObserver, Even
 	}
 
 	@Override
-	public void queueEvent(Event event) {
+	public void queueEvent(BattleEvent event) {
 		queue.addEvent(event);
 	}
 
