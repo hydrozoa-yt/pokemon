@@ -1,9 +1,11 @@
 package com.hydrozoa.pokemon.controller;
 
+import java.util.Queue;
+
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.hydrozoa.pokemon.battle.Battle;
-import com.hydrozoa.pokemon.battle.event.EventQueue;
+import com.hydrozoa.pokemon.battle.event.BattleEvent;
 import com.hydrozoa.pokemon.battle.event.TextEvent;
 import com.hydrozoa.pokemon.battle.moves.MoveSpecification;
 import com.hydrozoa.pokemon.ui.DialogueBox;
@@ -24,7 +26,7 @@ public class BattleScreenController extends InputAdapter {
 	
 	private STATE state = STATE.DEACTIVATED;
 	
-	private EventQueue queue;
+	private Queue<BattleEvent> queue;
 	
 	private Battle battle;
 	
@@ -32,7 +34,7 @@ public class BattleScreenController extends InputAdapter {
 	private OptionBox optionBox;
 	private MoveSelectBox moveSelect;
 	
-	public BattleScreenController(Battle battle, EventQueue queue, DialogueBox dialogue, MoveSelectBox options, OptionBox optionBox) {
+	public BattleScreenController(Battle battle, Queue<BattleEvent> queue, DialogueBox dialogue, MoveSelectBox options, OptionBox optionBox) {
 		this.battle = battle;
 		this.queue = queue;
 		this.dialogue = dialogue;
@@ -76,7 +78,7 @@ public class BattleScreenController extends InputAdapter {
 			if (keycode == Keys.X) {
 				int selection = moveSelect.getSelection();
 				if (battle.getPlayerPokemon().getMove(selection) == null) {
-					queue.addEvent(new TextEvent("No such move...", 0.5f));
+					queue.add(new TextEvent("No such move...", 0.5f));
 				} else {
 					battle.progress(moveSelect.getSelection());
 					endTurn();

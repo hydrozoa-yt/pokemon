@@ -7,7 +7,8 @@ import com.hydrozoa.pokemon.battle.animation.FaintingAnimation;
 import com.hydrozoa.pokemon.battle.animation.PokeballAnimation;
 import com.hydrozoa.pokemon.battle.event.AnimationBattleEvent;
 import com.hydrozoa.pokemon.battle.event.BattleEvent;
-import com.hydrozoa.pokemon.battle.event.BattleEventBroadcaster;
+import com.hydrozoa.pokemon.battle.event.BattleEventQueuer;
+import com.hydrozoa.pokemon.battle.event.BattleEventPlayer;
 import com.hydrozoa.pokemon.battle.event.HPAnimationEvent;
 import com.hydrozoa.pokemon.battle.event.NameChangeEvent;
 import com.hydrozoa.pokemon.battle.event.PokeSpriteEvent;
@@ -20,7 +21,7 @@ import com.hydrozoa.pokemon.model.Pokemon;
  * 
  * @author hydrozoa
  */
-public class Battle implements BattleEventBroadcaster {
+public class Battle implements BattleEventQueuer {
 	
 	public enum STATE {
 		READY_TO_PROGRESS,
@@ -40,8 +41,8 @@ public class Battle implements BattleEventBroadcaster {
 	
 	private Trainer playerTrainer;
 	private Trainer opponentTrainer;
-	
-	private List<BattleObserver> observers = new ArrayList<BattleObserver>();
+
+	private BattleEventPlayer eventPlayer; 
 	
 	public Battle(Trainer player, Pokemon opponent) {
 		this.playerTrainer = player;
@@ -55,10 +56,10 @@ public class Battle implements BattleEventBroadcaster {
 	 * Plays appropiate animation for starting a battle
 	 */
 	public void beginBattle() {
-		broadcastEvent(new PokeSpriteEvent(opponent.getSprite(), BATTLE_PARTY.OPPONENT));
-		broadcastEvent(new TextEvent("Go "+player.getName()+"!", 1f));
-		broadcastEvent(new PokeSpriteEvent(player.getSprite(), BATTLE_PARTY.PLAYER));
-		broadcastEvent(new AnimationBattleEvent(BATTLE_PARTY.PLAYER, new PokeballAnimation()));
+		queueEvent(new PokeSpriteEvent(opponent.getSprite(), BATTLE_PARTY.OPPONENT));
+		queueEvent(new TextEvent("Go "+player.getName()+"!", 1f));
+		queueEvent(new PokeSpriteEvent(player.getSprite(), BATTLE_PARTY.PLAYER));
+		queueEvent(new AnimationBattleEvent(BATTLE_PARTY.PLAYER, new PokeballAnimation()));
 	}
 	
 	
@@ -93,16 +94,16 @@ public class Battle implements BattleEventBroadcaster {
 	 */
 	public void chooseNewPokemon(Pokemon pokemon) {
 		this.player = pokemon;
-		broadcastEvent(new HPAnimationEvent(
+		queueEvent(new HPAnimationEvent(
 				BATTLE_PARTY.PLAYER, 
 				pokemon.getCurrentHitpoints(), 
 				pokemon.getCurrentHitpoints(), 
 				pokemon.getStat(STAT.HITPOINTS), 
 				0f));
-		broadcastEvent(new PokeSpriteEvent(pokemon.getSprite(), BATTLE_PARTY.PLAYER));
-		broadcastEvent(new NameChangeEvent(pokemon.getName(), BATTLE_PARTY.PLAYER));
-		broadcastEvent(new TextEvent("Go get 'em, "+pokemon.getName()+"!"));
-		broadcastEvent(new AnimationBattleEvent(BATTLE_PARTY.PLAYER, new PokeballAnimation()));
+		queueEvent(new PokeSpriteEvent(pokemon.getSprite(), BATTLE_PARTY.PLAYER));
+		queueEvent(new NameChangeEvent(pokemon.getName(), BATTLE_PARTY.PLAYER));
+		queueEvent(new TextEvent("Go get 'em, "+pokemon.getName()+"!"));
+		queueEvent(new AnimationBattleEvent(BATTLE_PARTY.PLAYER, new PokeballAnimation()));
 		this.state = STATE.READY_TO_PROGRESS;
 	}
 	
@@ -110,7 +111,7 @@ public class Battle implements BattleEventBroadcaster {
 	 * Attempts to run away
 	 */
 	public void attemptRun() {
-		broadcastEvent(new TextEvent("Got away successfully...", true));
+		queueEvent(new TextEvent("Got away successfully...", true));
 		this.state = STATE.RAN;
 	}
 	
@@ -130,17 +131,17 @@ public class Battle implements BattleEventBroadcaster {
 		Move move = pokeUser.getMove(input);
 		
 		/* Broadcast the text graphics */
-		broadcastEvent(new TextEvent(pokeUser.getName()+" used\n"+move.getName().toUpperCase()+"!", 0.5f));
+		queueEvent(new TextEvent(pokeUser.getName()+" used\n"+move.getName().toUpperCase()+"!", 0.5f));
 		
 		if (mechanics.attemptHit(move, pokeUser, pokeTarget)) {
 			move.useMove(mechanics, pokeUser, pokeTarget, user, this);
 		} else { // miss
 			/* Broadcast the text graphics */
-			broadcastEvent(new TextEvent(pokeUser.getName()+"'s\nattack missed!", 0.5f));
+			queueEvent(new TextEvent(pokeUser.getName()+"'s\nattack missed!", 0.5f));
 		}
 		
 		if (player.isFainted()) {
-			broadcastEvent(new AnimationBattleEvent(BATTLE_PARTY.PLAYER, new FaintingAnimation()));
+			queueEvent(new AnimationBattleEvent(BATTLE_PARTY.PLAYER, new FaintingAnimation()));
 			boolean anyoneAlive = false;
 			for (int i = 0; i < getPlayerTrainer().getTeamSize(); i++) {
 				if (!getPlayerTrainer().getPokemon(i).isFainted()) {
@@ -149,15 +150,15 @@ public class Battle implements BattleEventBroadcaster {
 				}
 			}
 			if (anyoneAlive) {
-				broadcastEvent(new TextEvent(player.getName()+" fainted!", true));
+				queueEvent(new TextEvent(player.getName()+" fainted!", true));
 				this.state = STATE.SELECT_NEW_POKEMON;
 			} else {
-				broadcastEvent(new TextEvent("Unfortunately, you've lost...", true));
+				queueEvent(new TextEvent("Unfortunately, you've lost...", true));
 				this.state = STATE.LOSE;
 			}
 		} else if (opponent.isFainted()) {
-			broadcastEvent(new AnimationBattleEvent(BATTLE_PARTY.OPPONENT, new FaintingAnimation()));
-			broadcastEvent(new TextEvent("Congratulations! You Win!", true));
+			queueEvent(new AnimationBattleEvent(BATTLE_PARTY.OPPONENT, new FaintingAnimation()));
+			queueEvent(new TextEvent("Congratulations! You Win!", true));
 			this.state = STATE.WIN;
 		}
 	}
@@ -181,15 +182,13 @@ public class Battle implements BattleEventBroadcaster {
 	public STATE getState() {
 		return state;
 	}
-	
-	public void addObserver(BattleObserver observer) {
-		observers.add(observer);
+
+	public void setEventPlayer(BattleEventPlayer player) {
+		this.eventPlayer = player;
 	}
 	
 	@Override
-	public void broadcastEvent(BattleEvent event) {
-		for (BattleObserver observer : observers) {
-			observer.queueEvent(event);
-		}
+	public void queueEvent(BattleEvent event) {
+		eventPlayer.queueEvent(event);
 	}
 }

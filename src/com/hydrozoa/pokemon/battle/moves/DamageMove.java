@@ -6,7 +6,7 @@ import com.hydrozoa.pokemon.battle.STAT;
 import com.hydrozoa.pokemon.battle.animation.BattleAnimation;
 import com.hydrozoa.pokemon.battle.animation.BlinkingAnimation;
 import com.hydrozoa.pokemon.battle.event.AnimationBattleEvent;
-import com.hydrozoa.pokemon.battle.event.BattleEventBroadcaster;
+import com.hydrozoa.pokemon.battle.event.BattleEventQueuer;
 import com.hydrozoa.pokemon.battle.event.HPAnimationEvent;
 import com.hydrozoa.pokemon.battle.event.TextEvent;
 import com.hydrozoa.pokemon.model.Pokemon;
@@ -44,20 +44,20 @@ public class DamageMove extends Move {
 	}
 	
 	@Override
-	public int useMove(BattleMechanics mechanics, Pokemon user, Pokemon target, BATTLE_PARTY party, BattleEventBroadcaster broadcaster) {
+	public int useMove(BattleMechanics mechanics, Pokemon user, Pokemon target, BATTLE_PARTY party, BattleEventQueuer broadcaster) {
 		int hpBefore = target.getCurrentHitpoints();
 		int damage = super.useMove(mechanics, user, target, party, broadcaster);
 		
 		/* Broadcast animations */
-		broadcaster.broadcastEvent(new AnimationBattleEvent(party, animation()));
+		broadcaster.queueEvent(new AnimationBattleEvent(party, animation()));
 		
 		/* Broadcast blinking */
-		broadcaster.broadcastEvent(new AnimationBattleEvent(BATTLE_PARTY.getOpposite(party), new BlinkingAnimation(1f, 5)));
+		broadcaster.queueEvent(new AnimationBattleEvent(BATTLE_PARTY.getOpposite(party), new BlinkingAnimation(1f, 5)));
 		
 		//float hpPercentage = ((float)target.getCurrentHitpoints())/(float)target.getStat(STAT.HITPOINTS);
 		
 		/* Broadcast HP change */
-		broadcaster.broadcastEvent(
+		broadcaster.queueEvent(
 				new HPAnimationEvent(
 						BATTLE_PARTY.getOpposite(party), 
 						hpBefore,
@@ -66,7 +66,7 @@ public class DamageMove extends Move {
 						0.5f));
 		
 		if (mechanics.hasMessage()) {
-			broadcaster.broadcastEvent(new TextEvent(mechanics.getMessage(), 0.5f));
+			broadcaster.queueEvent(new TextEvent(mechanics.getMessage(), 0.5f));
 		}
 		return damage;
 	}

@@ -24,4 +24,6 @@ public interface BattleEventPlayer {
 	public BattleAnimation getBattleAnimation();
 	
 	public TweenManager getTweenManager();
+	
+	public void queueEvent(BattleEvent event);
 }

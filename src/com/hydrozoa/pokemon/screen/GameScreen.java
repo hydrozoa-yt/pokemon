@@ -1,9 +1,10 @@
 package com.hydrozoa.pokemon.screen;
 
+import java.util.ArrayDeque;
 import java.util.HashMap;
+import java.util.Queue;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -16,19 +17,20 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hydrozoa.pokemon.PokemonGame;
+import com.hydrozoa.pokemon.controller.ActorMovementController;
 import com.hydrozoa.pokemon.controller.DialogueController;
-import com.hydrozoa.pokemon.controller.PlayerController;
+import com.hydrozoa.pokemon.controller.InteractionController;
 import com.hydrozoa.pokemon.dialogue.Dialogue;
-import com.hydrozoa.pokemon.dialogue.DialogueNode;
 import com.hydrozoa.pokemon.model.Camera;
 import com.hydrozoa.pokemon.model.DIRECTION;
 import com.hydrozoa.pokemon.model.actor.PlayerActor;
 import com.hydrozoa.pokemon.model.world.World;
-import com.hydrozoa.pokemon.model.world.script.WorldInterface;
+import com.hydrozoa.pokemon.model.world.cutscene.CutsceneEvent;
+import com.hydrozoa.pokemon.model.world.cutscene.CutsceneEventQueuer;
+import com.hydrozoa.pokemon.model.world.cutscene.CutscenePlayer;
+import com.hydrozoa.pokemon.screen.renderer.EventQueueRenderer;
 import com.hydrozoa.pokemon.screen.renderer.WorldRenderer;
 import com.hydrozoa.pokemon.screen.transition.Action;
-import com.hydrozoa.pokemon.screen.transition.BattleBlinkTransition;
-import com.hydrozoa.pokemon.screen.transition.BattleTransition;
 import com.hydrozoa.pokemon.screen.transition.FadeInTransition;
 import com.hydrozoa.pokemon.screen.transition.FadeOutTransition;
 import com.hydrozoa.pokemon.ui.DialogueBox;
@@ -39,23 +41,28 @@ import com.hydrozoa.pokemon.util.MapUtil;
 /**
  * @author hydrozoa
  */
-public class GameScreen extends AbstractScreen implements WorldInterface {
+public class GameScreen extends AbstractScreen implements CutscenePlayer, CutsceneEventQueuer {
 	
 	private InputMultiplexer multiplexer;
 	private DialogueController dialogueController;
-	private PlayerController playerController;
+	private ActorMovementController playerController;
+	private InteractionController interactionController;
 	
 	private HashMap<String, World> worlds = new HashMap<String, World>();
 	private World world;
 	private PlayerActor player;
 	private Camera camera;
+	private Dialogue dialogue;
 	private MapUtil mapUtil;
+	private Queue<CutsceneEvent> eventQueue = new ArrayDeque<CutsceneEvent>();
+	private CutsceneEvent currentEvent;
 	
 	private SpriteBatch batch;
 	
 	private Viewport gameViewport;
 	
 	private WorldRenderer worldRenderer;
+	private EventQueueRenderer queueRenderer;
 	
 	private int uiScale = 2;
 	
@@ -63,8 +70,6 @@ public class GameScreen extends AbstractScreen implements WorldInterface {
 	private Table root;
 	private DialogueBox dialogueBox;
 	private OptionBox optionsBox;
-	
-	private Dialogue dialogue;
 
 	public GameScreen(PokemonGame app) {
 		super(app);
@@ -88,7 +93,7 @@ public class GameScreen extends AbstractScreen implements WorldInterface {
 		worlds.put("test_level", mapUtil.loadWorld1());
 		worlds.put("test_indoors", mapUtil.loadWorld2());
 		
-		world = worlds.get("test_level");
+		world = worlds.get("test_indoors");
 		
 		camera = new Camera();
 		player = new PlayerActor(world, 4, 4, animations);
@@ -98,30 +103,15 @@ public class GameScreen extends AbstractScreen implements WorldInterface {
 		
 		multiplexer = new InputMultiplexer();
 		
-		playerController = new PlayerController(player);
+		playerController = new ActorMovementController(player);
 		dialogueController = new DialogueController(dialogueBox, optionsBox);
+		interactionController = new InteractionController(player, world, dialogueController);
 		multiplexer.addProcessor(0, dialogueController);
 		multiplexer.addProcessor(1, playerController);
+		multiplexer.addProcessor(2, interactionController);
 		
 		worldRenderer = new WorldRenderer(getApp().getAssetManager(), world);
-		
-		dialogue = new Dialogue();
-		
-		DialogueNode node1 = new DialogueNode("Hello!\nNice to meet you.", 0);
-		DialogueNode node2 = new DialogueNode("Are you a boy or a girl?", 1);
-		DialogueNode node3 = new DialogueNode("I knew you were boy all along.", 2);
-		DialogueNode node4 = new DialogueNode("I knew you were girl all along.", 3);
-		
-		node1.makeLinear(node2.getID());
-		node2.addChoice("Boy", 2);
-		node2.addChoice("Girl", 3);
-		
-		dialogue.addNode(node1);
-		dialogue.addNode(node2);
-		dialogue.addNode(node3);
-		dialogue.addNode(node4);
-		
-		//dialogueController.startDialogue(dialogue);
+		queueRenderer = new EventQueueRenderer(app.getSkin(), eventQueue);
 	}
 
 	@Override
@@ -141,26 +131,30 @@ public class GameScreen extends AbstractScreen implements WorldInterface {
 	
 	@Override
 	public void update(float delta) {
-		/* DEBUG */
-		if (Gdx.input.isKeyJustPressed(Keys.F9)) {
-			getApp().startTransition(
-					this, 
-					getApp().getBattleScreen(), 
-					new BattleBlinkTransition(4f, 4, Color.GRAY, getApp().getTransitionShader(), getApp().getTweenManager(), getApp().getAssetManager()), 
-					new BattleTransition(2f, 10, true, getApp().getTransitionShader(), getApp().getTweenManager(), getApp().getAssetManager()),
-					new Action() {
-						@Override
-						public void action() {
-							
-						}
-					});
+		while (currentEvent == null || currentEvent.isFinished()) { // no active event
+			if (eventQueue.peek() == null) { // no event queued up
+				currentEvent = null;
+				break;
+			} else {					// event queued up
+				currentEvent = eventQueue.poll();
+				currentEvent.begin(this);
+			}
 		}
 		
-		playerController.update(delta);
+		if (currentEvent != null) {
+			currentEvent.update(delta);
+		}
+			
+		if (currentEvent == null) {
+			playerController.update(delta);
+		}
+		
 		dialogueController.update(delta);
 		
-		camera.update(player.getWorldX()+0.5f, player.getWorldY()+0.5f);
-		world.update(delta);
+		if (!dialogueBox.isVisible()) {
+			camera.update(player.getWorldX()+0.5f, player.getWorldY()+0.5f);
+			world.update(delta);
+		}
 		uiStage.act(delta);
 	}
 
@@ -169,6 +163,7 @@ public class GameScreen extends AbstractScreen implements WorldInterface {
 		gameViewport.apply();
 		batch.begin();
 		worldRenderer.render(batch, camera);
+		queueRenderer.render(batch, currentEvent);
 		batch.end();
 		
 		uiStage.draw();
@@ -189,6 +184,9 @@ public class GameScreen extends AbstractScreen implements WorldInterface {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(multiplexer);
+		if (currentEvent != null) {
+			currentEvent.screenShow();
+		}
 	}
 	
 	private void initUI() {
@@ -242,7 +240,6 @@ public class GameScreen extends AbstractScreen implements WorldInterface {
 					@Override
 					public void action() {
 						changeWorld(newWorld, x, y, facing);
-						System.out.println("jup");
 					}
 				});
 	}
@@ -250,5 +247,10 @@ public class GameScreen extends AbstractScreen implements WorldInterface {
 	@Override
 	public World getWorld(String worldName) {
 		return worlds.get(worldName);
+	}
+
+	@Override
+	public void queueEvent(CutsceneEvent event) {
+		eventQueue.add(event);
 	}
 }

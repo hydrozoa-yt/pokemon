@@ -10,15 +10,19 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
+import com.hydrozoa.pokemon.dialogue.Dialogue;
+import com.hydrozoa.pokemon.dialogue.DialogueNode;
+import com.hydrozoa.pokemon.dialogue.LinearDialogueNode;
 import com.hydrozoa.pokemon.model.DIRECTION;
 import com.hydrozoa.pokemon.model.TERRAIN;
 import com.hydrozoa.pokemon.model.TeleportTile;
 import com.hydrozoa.pokemon.model.Tile;
-import com.hydrozoa.pokemon.model.actor.NPCActor;
-import com.hydrozoa.pokemon.model.actor.RandomWalkingBehavior;
+import com.hydrozoa.pokemon.model.actor.Actor;
+import com.hydrozoa.pokemon.model.actor.LimitedWalkingBehavior;
 import com.hydrozoa.pokemon.model.world.World;
 import com.hydrozoa.pokemon.model.world.WorldObject;
-import com.hydrozoa.pokemon.model.world.script.WorldInterface;
+import com.hydrozoa.pokemon.model.world.cutscene.CutsceneEventQueuer;
+import com.hydrozoa.pokemon.model.world.cutscene.CutscenePlayer;
 
 /**
  * Will load a few simple World setups. Allows us to work with multiple maps without map loading.
@@ -32,11 +36,11 @@ public class MapUtil {
 	private AnimationSet npcAnimations;
 	
 	private AssetManager assetManager;
-	private WorldInterface worldInterface;
+	private CutsceneEventQueuer broadcaster;
 	
-	public MapUtil(AssetManager assetManager, WorldInterface worldInterface, AnimationSet npcAnimations) {
+	public MapUtil(AssetManager assetManager, CutsceneEventQueuer broadcaster, AnimationSet npcAnimations) {
 		this.assetManager = assetManager;
-		this.worldInterface = worldInterface;
+		this.broadcaster = broadcaster;
 		this.npcAnimations = npcAnimations;
 		
 		TextureAtlas atlas = assetManager.get("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
@@ -63,8 +67,6 @@ public class MapUtil {
 			}
 		}
 		
-		//world.getMap().setTile(new TeleportTile(null, worldInterface, "test_level", 8,8,DIRECTION.SOUTH,Color.WHITE), 0, 4);
-		
 		
 		addHouse(world,10,10);
 		addFlowers(world,5,5);
@@ -76,7 +78,14 @@ public class MapUtil {
 			}
 		}
 		
-		world.addActor(new NPCActor(world, 3, 3, npcAnimations, new RandomWalkingBehavior(1f, 4f, new Random())));
+		Actor actor = new Actor(world, 3, 3, npcAnimations);
+		LimitedWalkingBehavior brain = new LimitedWalkingBehavior(actor, 1, 1, 1, 1, 0.3f, 1f, new Random());
+		world.addActor(actor, brain);
+		
+		Dialogue greeting = new Dialogue();
+		DialogueNode firstNode = new LinearDialogueNode("Hello!\nI've been roaming here for days", 0);
+		greeting.addNode(firstNode);
+		actor.setDialogue(greeting);
 		
 		return world;
 	}
@@ -107,7 +116,7 @@ public class MapUtil {
 			}
 		}
 		
-		world.getMap().setTile(new TeleportTile(null, worldInterface, "test_level", 8,8,DIRECTION.SOUTH,Color.WHITE), 4, 0);
+		world.getMap().setTile(new TeleportTile(null, broadcaster, "test_level", 13,10,DIRECTION.SOUTH,Color.WHITE), 4, 0);
 		addRug(world,3,0);
 		
 		return world;

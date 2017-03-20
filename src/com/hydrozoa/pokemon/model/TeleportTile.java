@@ -3,15 +3,15 @@ package com.hydrozoa.pokemon.model;
 import com.badlogic.gdx.graphics.Color;
 import com.hydrozoa.pokemon.model.actor.Actor;
 import com.hydrozoa.pokemon.model.actor.PlayerActor;
-import com.hydrozoa.pokemon.model.world.World;
-import com.hydrozoa.pokemon.model.world.script.WorldInterface;
+import com.hydrozoa.pokemon.model.world.cutscene.ChangeWorldEvent;
+import com.hydrozoa.pokemon.model.world.cutscene.CutsceneEventQueuer;
 
 /**
  * @author hydrozoa
  */
 public class TeleportTile extends Tile {
 	
-	private WorldInterface worldInterface;
+	private CutsceneEventQueuer broadcaster;
 	
 	/* destination */
 	private String worldName;
@@ -21,22 +21,20 @@ public class TeleportTile extends Tile {
 	/* transition color */
 	private Color color;
 
-	public TeleportTile(TERRAIN terrain, WorldInterface worldInterface, String worldName, int x, int y, DIRECTION facing, Color color) {
+	public TeleportTile(TERRAIN terrain, CutsceneEventQueuer broadcaster, String worldName, int x, int y, DIRECTION facing, Color color) {
 		super(terrain);
 		this.worldName = worldName;
 		this.x= x;
 		this.y=y;
 		this.facing=facing;
 		this.color=color;
-		this.worldInterface = worldInterface;
+		this.broadcaster = broadcaster;
 	}
 	
 	@Override
 	public void actorStep(Actor a) {
 		if (a instanceof PlayerActor) {
-			World targetWorld = worldInterface.getWorld(worldName);
-			worldInterface.changeLocation(targetWorld, x, y, facing, color);
+			broadcaster.queueEvent(new ChangeWorldEvent(worldName, x, y, facing, color));
 		}
 	}
-
 }

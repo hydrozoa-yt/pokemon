@@ -1,15 +1,15 @@
 package com.hydrozoa.pokemon.screen.renderer;
 
+import java.util.Queue;
+
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.hydrozoa.pokemon.battle.event.BattleEvent;
-import com.hydrozoa.pokemon.battle.event.EventQueue;
 
 /**
- * Offers visuals for {@link  com.hydrozoa.pokemon.battle.event.EventQueue}.
+ * Offers visuals for any Queue.
  * 
  * @author hydrozoa
  */
@@ -23,9 +23,9 @@ public class EventQueueRenderer {
 	
 	private GlyphLayout layout;
 	
-	private EventQueue eventQueue;
+	private Queue eventQueue;
 	
-	public EventQueueRenderer(Skin skin, EventQueue eventQueue) {
+	public EventQueueRenderer(Skin skin, Queue eventQueue) {
 		this.skin = skin;
 		this.eventQueue = eventQueue;
 		patch = skin.getPatch("optionbox");
@@ -33,11 +33,14 @@ public class EventQueueRenderer {
 		layout = new GlyphLayout();
 	}
 	
-	public void render(SpriteBatch batch, BattleEvent event) {
+	public void render(SpriteBatch batch, Object event) {
+		if (event == null) {
+			return;
+		}
 		renderEvent(batch, event.getClass().getSimpleName(), 0);
 		
 		float y = boxHeight + 10f;
-		for (BattleEvent e : eventQueue.getEvents()) {
+		for (Object e : eventQueue.toArray()) {
 			renderEvent(batch, e.getClass().getSimpleName(), y);
 			y += boxHeight;
 		}

@@ -6,9 +6,11 @@ import com.hydrozoa.pokemon.model.DIRECTION;
 import com.hydrozoa.pokemon.model.actor.Actor;
 
 /**
+ * Controller that can move an Actor around.
+ * 
  * @author hydrozoa
  */
-public class PlayerController extends InputAdapter {
+public class ActorMovementController extends InputAdapter {
 	
 	private Actor player;
 	
@@ -17,7 +19,7 @@ public class PlayerController extends InputAdapter {
 	
 	private float WALK_REFACE_THRESHOLD = 0.07f;
 	
-	public PlayerController(Actor p) {
+	public ActorMovementController(Actor p) {
 		this.player = p;
 		buttonPress = new boolean[DIRECTION.values().length];
 		buttonPress[DIRECTION.NORTH.ordinal()] = false;

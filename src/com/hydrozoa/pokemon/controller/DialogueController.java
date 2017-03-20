@@ -1,11 +1,12 @@
 package com.hydrozoa.pokemon.controller;
 
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputAdapter;
+import com.hydrozoa.pokemon.dialogue.ChoiceDialogueNode;
 import com.hydrozoa.pokemon.dialogue.Dialogue;
 import com.hydrozoa.pokemon.dialogue.DialogueNode;
 import com.hydrozoa.pokemon.dialogue.DialogueTraverser;
-import com.hydrozoa.pokemon.dialogue.DialogueNode.NODE_TYPE;
+import com.hydrozoa.pokemon.dialogue.LinearDialogueNode;
 import com.hydrozoa.pokemon.ui.DialogueBox;
 import com.hydrozoa.pokemon.ui.OptionBox;
 
@@ -42,15 +43,26 @@ public class DialogueController extends InputAdapter {
 				return true;
 			}
 		}
-		if (traverser != null && keycode == Keys.X && dialogueBox.isFinished()) { // continue through tree
-			if (traverser.getType() == NODE_TYPE.END) {
-				traverser = null;
-				dialogueBox.setVisible(false);
-			} else if (traverser.getType() == NODE_TYPE.LINEAR) {
-				progress(0);
-			} else if (traverser.getType() == NODE_TYPE.MULTIPLE_CHOICE) {
+		if (dialogueBox.isVisible() && !dialogueBox.isFinished()) {
+			return false;
+		}
+		if (traverser != null && keycode == Keys.X) { // continue through tree
+			DialogueNode thisNode = traverser.getNode();
+			
+			if (thisNode instanceof LinearDialogueNode)  {
+				LinearDialogueNode node = (LinearDialogueNode)thisNode;
+				if (node.getPointers().isEmpty()) { // blind end, since to pointers
+					traverser = null;				// end dialogue
+					dialogueBox.setVisible(false);
+				} else {
+					progress(0); // progress through first pointer
+				}
+			}
+			if (thisNode instanceof ChoiceDialogueNode)  {
+				ChoiceDialogueNode node = (ChoiceDialogueNode)thisNode;
 				progress(optionBox.getIndex());
 			}
+			
 			return true;
 		}
 		if (dialogueBox.isVisible()) {
@@ -61,7 +73,8 @@ public class DialogueController extends InputAdapter {
 	
 	public void update(float delta) {
 		if (dialogueBox.isFinished() && traverser != null) {
-			if (traverser.getType() == NODE_TYPE.MULTIPLE_CHOICE) {
+			DialogueNode nextNode = traverser.getNode();
+			if (nextNode instanceof ChoiceDialogueNode) {
 				optionBox.setVisible(true);
 			}
 		}
@@ -70,10 +83,17 @@ public class DialogueController extends InputAdapter {
 	public void startDialogue(Dialogue dialogue) {
 		traverser = new DialogueTraverser(dialogue);
 		dialogueBox.setVisible(true);
-		dialogueBox.animateText(traverser.getText());
-		if (traverser.getType() == NODE_TYPE.MULTIPLE_CHOICE) {
+		
+		DialogueNode nextNode = traverser.getNode();
+		if (nextNode instanceof LinearDialogueNode) {
+			LinearDialogueNode node = (LinearDialogueNode)nextNode;
+			dialogueBox.animateText(node.getText());
+		}
+		if (nextNode instanceof ChoiceDialogueNode) {
+			ChoiceDialogueNode node = (ChoiceDialogueNode)nextNode;
+			dialogueBox.animateText(node.getText());
 			optionBox.clear();
-			for (String s : dialogue.getNode(dialogue.getStart()).getLabels()) {
+			for (String s : node.getLabels()) {
 				optionBox.addOption(s);
 			}
 		}
@@ -82,10 +102,16 @@ public class DialogueController extends InputAdapter {
 	private void progress(int index) {
 		optionBox.setVisible(false);
 		DialogueNode nextNode = traverser.getNextNode(index);
-		dialogueBox.animateText(nextNode.getText());
-		if (nextNode.getType() == NODE_TYPE.MULTIPLE_CHOICE) {
+		
+		if (nextNode instanceof LinearDialogueNode) {
+			LinearDialogueNode node = (LinearDialogueNode)nextNode;
+			dialogueBox.animateText(node.getText());
+		}
+		if (nextNode instanceof ChoiceDialogueNode) {
+			ChoiceDialogueNode node = (ChoiceDialogueNode)nextNode;
+			dialogueBox.animateText(node.getText());
 			optionBox.clearChoices();
-			for (String s : nextNode.getLabels()) {
+			for (String s : node.getLabels()) {
 				optionBox.addOption(s);
 			}
 		}

@@ -1,5 +1,8 @@
 package com.hydrozoa.pokemon.screen;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,12 +18,10 @@ import com.hydrozoa.pokemon.Settings;
 import com.hydrozoa.pokemon.battle.BATTLE_PARTY;
 import com.hydrozoa.pokemon.battle.Battle;
 import com.hydrozoa.pokemon.battle.Battle.STATE;
-import com.hydrozoa.pokemon.battle.BattleObserver;
 import com.hydrozoa.pokemon.battle.Trainer;
 import com.hydrozoa.pokemon.battle.animation.BattleAnimation;
 import com.hydrozoa.pokemon.battle.event.BattleEvent;
 import com.hydrozoa.pokemon.battle.event.BattleEventPlayer;
-import com.hydrozoa.pokemon.battle.event.EventQueue;
 import com.hydrozoa.pokemon.controller.BattleScreenController;
 import com.hydrozoa.pokemon.model.Pokemon;
 import com.hydrozoa.pokemon.screen.renderer.BattleDebugRenderer;
@@ -37,14 +38,14 @@ import aurelienribon.tweenengine.TweenManager;
 /**
  * @author hydrozoa
  */
-public class BattleScreen extends AbstractScreen implements BattleObserver, BattleEventPlayer {
+public class BattleScreen extends AbstractScreen implements BattleEventPlayer {
 	
 	/* Controller */
 	private BattleScreenController controller;
 	
 	/* Event system */
 	private BattleEvent currentEvent;
-	private EventQueue queue = new EventQueue();
+	private Queue<BattleEvent> queue = new ArrayDeque<BattleEvent>();
 	
 	/* Model */
 	private Battle battle;
@@ -77,7 +78,7 @@ public class BattleScreen extends AbstractScreen implements BattleObserver, Batt
 	
 	/* DEBUG */
 	private boolean uiDebug = false;
-	private boolean battleDebug = false;
+	private boolean battleDebug = true;
 
 	public BattleScreen(PokemonGame app) {
 		super(app);
@@ -93,7 +94,7 @@ public class BattleScreen extends AbstractScreen implements BattleObserver, Batt
 		battle = new Battle(
 				playerTrainer,
 				Pokemon.generatePokemon("Grimer", slowpoke, app.getMoveDatabase()));
-		battle.addObserver(this);
+		battle.setEventPlayer(this);
 		
 		animationPrimary = BATTLE_PARTY.PLAYER;
 		
@@ -153,7 +154,7 @@ public class BattleScreen extends AbstractScreen implements BattleObserver, Batt
 				}
 				break;
 			} else {					// event queued up
-				currentEvent = queue.pop();
+				currentEvent = queue.poll();
 				currentEvent.begin(this);
 			}
 		}
@@ -267,7 +268,7 @@ public class BattleScreen extends AbstractScreen implements BattleObserver, Batt
 
 	@Override
 	public void queueEvent(BattleEvent event) {
-		queue.addEvent(event);
+		queue.add(event);
 	}
 
 	@Override

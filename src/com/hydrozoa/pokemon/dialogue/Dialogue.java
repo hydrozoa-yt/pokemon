@@ -28,16 +28,4 @@ public class Dialogue {
 	public int size() {
 		return nodes.size();
 	}
-	
-	public static Dialogue generateDialogue(String... lines) {
-		Dialogue dialogue = new Dialogue();
-		for (int i = 0; i < lines.length; i++) {
-			DialogueNode node = new DialogueNode(lines[i], i);
-			dialogue.addNode(node);
-			if (i != 0) {
-				dialogue.getNode(i-1).makeLinear(i);
-			}
-		}
-		return dialogue;
-	}
 }

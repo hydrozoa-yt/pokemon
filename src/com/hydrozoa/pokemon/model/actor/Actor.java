@@ -2,6 +2,7 @@ package com.hydrozoa.pokemon.model.actor;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
+import com.hydrozoa.pokemon.dialogue.Dialogue;
 import com.hydrozoa.pokemon.model.DIRECTION;
 import com.hydrozoa.pokemon.model.YSortable;
 import com.hydrozoa.pokemon.model.world.World;
@@ -33,6 +34,8 @@ public class Actor implements YSortable {
 	private ACTOR_STATE state;
 	
 	private AnimationSet animations;
+	
+	private Dialogue dialogue;
 	
 	public Actor(World world, int x, int y, AnimationSet animations) {
 		this.world = world;
@@ -81,16 +84,29 @@ public class Actor implements YSortable {
 		moveRequestThisFrame = false;
 	}
 	
-	public void reface(DIRECTION dir) {
+	public boolean reface(DIRECTION dir) {
 		if (state != ACTOR_STATE.STANDING) { // can only reface when standing
-			return;
+			return false;
 		}
 		if (facing == dir) { // can't reface if we already face a direction
-			return;
+			return true;
 		}
 		facing = dir;
 		state = ACTOR_STATE.REFACING;
 		animTimer = 0f;
+		return true;
+	}
+	
+	/**
+	 * Changes the Players facing direction, without the walk-frame animation.
+	 * This is used when loading maps, and in dialogue.
+	 */
+	public boolean refaceWithoutAnimation(DIRECTION dir) {
+		if (state != ACTOR_STATE.STANDING) { // can only reface when standing
+			return false;
+		}
+		this.facing = dir;
+		return true;
 	}
 	
 	/**
@@ -168,14 +184,6 @@ public class Actor implements YSortable {
 		this.worldX = x;
 		this.worldY = y;
 	}
-	
-	/**
-	 * Changes the Players facing direction internally. This will not trigger the reface animation.
-	 * This is used when loading maps.
-	 */
-	public void refaceWithoutAnimation(DIRECTION dir) {
-		this.facing = dir;
-	}
 
 	public int getX() {
 		return x;
@@ -222,5 +230,17 @@ public class Actor implements YSortable {
 	
 	public ACTOR_STATE getState() {
 		return state;
+	}
+	
+	public DIRECTION getFacing() {
+		return facing;
+	}
+	
+	public void setDialogue(Dialogue dialogue) {
+		this.dialogue = dialogue;
+	}
+	
+	public Dialogue getDialogue() {
+		return dialogue;
 	}
 }

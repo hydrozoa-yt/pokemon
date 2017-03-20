@@ -3,7 +3,7 @@ package com.hydrozoa.pokemon.battle.moves;
 import com.hydrozoa.pokemon.battle.BATTLE_PARTY;
 import com.hydrozoa.pokemon.battle.BattleMechanics;
 import com.hydrozoa.pokemon.battle.animation.BattleAnimation;
-import com.hydrozoa.pokemon.battle.event.BattleEventBroadcaster;
+import com.hydrozoa.pokemon.battle.event.BattleEventQueuer;
 import com.hydrozoa.pokemon.model.Pokemon;
 
 /**
@@ -24,7 +24,7 @@ public abstract class Move {
 		this.animationClass = animationClass;
 	}
 	
-	public int useMove(BattleMechanics mechanics, Pokemon user, Pokemon target, BATTLE_PARTY party, BattleEventBroadcaster broadcaster) {
+	public int useMove(BattleMechanics mechanics, Pokemon user, Pokemon target, BATTLE_PARTY party, BattleEventQueuer broadcaster) {
 		int damage = mechanics.calculateDamage(this, user, target);
 		target.applyDamage(damage);
 		return damage;
