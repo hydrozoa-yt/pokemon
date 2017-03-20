@@ -243,4 +243,8 @@ public class Actor implements YSortable {
 	public Dialogue getDialogue() {
 		return dialogue;
 	}
+	
+	public World getWorld() {
+		return world;
+	}
 }

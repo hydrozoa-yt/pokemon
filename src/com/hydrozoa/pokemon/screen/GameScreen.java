@@ -105,7 +105,7 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer, Cutsce
 		
 		playerController = new ActorMovementController(player);
 		dialogueController = new DialogueController(dialogueBox, optionsBox);
-		interactionController = new InteractionController(player, world, dialogueController);
+		interactionController = new InteractionController(player, dialogueController);
 		multiplexer.addProcessor(0, dialogueController);
 		multiplexer.addProcessor(1, playerController);
 		multiplexer.addProcessor(2, interactionController);

@@ -8,7 +8,6 @@ import com.hydrozoa.pokemon.model.actor.Actor.ACTOR_STATE;
 
 /**
  * Behavior that will make an Actor walk around it's initial position randomly. 
- * NOTE: This behavior doesn't confine an Actor to a specific area.
  * 
  * @author hydrozoa
  */
