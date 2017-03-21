@@ -113,6 +113,12 @@ public class WorldRenderer {
 		Collections.reverse(forRendering);
 		
 		for (YSortable loc : forRendering) {
+			if (loc instanceof Actor) {
+				Actor a = (Actor)loc;
+				if (!a.isVisible()) {
+					continue;
+				}
+			}
 			batch.draw(loc.getSprite(), 
 					worldStartX+loc.getWorldX()*Settings.SCALED_TILE_SIZE,
 					worldStartY+loc.getWorldY()*Settings.SCALED_TILE_SIZE,

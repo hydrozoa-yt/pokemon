@@ -48,9 +48,13 @@ public class Tile {
 	}
 	
 	/**
-	 * Fires when an Actor steps on the Tile.
+	 * Fires when an Actor steps on the Tile. Called when the Actor is just about finished with his/her step.
 	 */
 	public void actorStep(Actor a) {
 		
+	}
+	
+	public boolean actorBeforeStep(Actor a) {
+		return true;
 	}
 }

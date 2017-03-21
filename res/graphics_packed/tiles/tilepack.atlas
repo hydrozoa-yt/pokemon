@@ -132,42 +132,42 @@ flowers
   index: 1
 flowers
   rotate: false
-  xy: 88, 16
+  xy: 138, 84
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 2
 grass
   rotate: false
-  xy: 106, 42
+  xy: 156, 84
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 grass1
   rotate: false
-  xy: 106, 24
+  xy: 174, 84
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 grass2
   rotate: false
-  xy: 106, 6
+  xy: 192, 84
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 indoor_tiles
   rotate: false
-  xy: 120, 84
+  xy: 210, 84
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 indoor_tiles_shadow
   rotate: false
-  xy: 120, 66
+  xy: 228, 84
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -188,7 +188,7 @@ rug
   index: -1
 sign
   rotate: false
-  xy: 138, 84
+  xy: 138, 66
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -202,15 +202,43 @@ small_house
   index: -1
 wall_bottom
   rotate: false
-  xy: 138, 66
+  xy: 156, 66
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_top
   rotate: false
-  xy: 156, 84
+  xy: 174, 66
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
+woodenDoor
+  rotate: false
+  xy: 88, 8
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+woodenDoor
+  rotate: false
+  xy: 106, 34
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+woodenDoor
+  rotate: false
+  xy: 106, 8
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+woodenDoor
+  rotate: false
+  xy: 120, 76
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 3

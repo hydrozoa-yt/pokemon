@@ -38,6 +38,17 @@ public class WorldObject implements YSortable {
 		this.walkable = true;
 	}
 	
+	public WorldObject(int x, int y, boolean walkable, TextureRegion texture, float sizeX, float sizeY, GridPoint2 tile) {
+		this.x = x;
+		this.y = y;
+		this.texture = texture;
+		this.sizeX = sizeX;
+		this.sizeY = sizeY;
+		this.tiles = new ArrayList<GridPoint2>();
+		this.tiles.add(tile);
+		this.walkable = walkable;
+	}
+	
 	public WorldObject(int x, int y, boolean walkable, TextureRegion texture, float sizeX, float sizeY, GridPoint2[] tiles) {
 		this.x = x;
 		this.y = y;

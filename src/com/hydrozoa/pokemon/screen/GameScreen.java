@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Queue;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -24,10 +25,14 @@ import com.hydrozoa.pokemon.dialogue.Dialogue;
 import com.hydrozoa.pokemon.model.Camera;
 import com.hydrozoa.pokemon.model.DIRECTION;
 import com.hydrozoa.pokemon.model.actor.PlayerActor;
+import com.hydrozoa.pokemon.model.world.Door;
 import com.hydrozoa.pokemon.model.world.World;
+import com.hydrozoa.pokemon.model.world.WorldObject;
+import com.hydrozoa.pokemon.model.world.cutscene.ActorWalkEvent;
 import com.hydrozoa.pokemon.model.world.cutscene.CutsceneEvent;
 import com.hydrozoa.pokemon.model.world.cutscene.CutsceneEventQueuer;
 import com.hydrozoa.pokemon.model.world.cutscene.CutscenePlayer;
+import com.hydrozoa.pokemon.model.world.cutscene.DoorEvent;
 import com.hydrozoa.pokemon.screen.renderer.EventQueueRenderer;
 import com.hydrozoa.pokemon.screen.renderer.WorldRenderer;
 import com.hydrozoa.pokemon.screen.transition.Action;
@@ -89,11 +94,11 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer, Cutsce
 				atlas.findRegion("brendan_stand_west")
 		);
 		
-		mapUtil = new MapUtil(app.getAssetManager(), this, animations);
+		mapUtil = new MapUtil(app.getAssetManager(), this, this, animations);
 		worlds.put("test_level", mapUtil.loadWorld1());
 		worlds.put("test_indoors", mapUtil.loadWorld2());
 		
-		world = worlds.get("test_indoors");
+		world = worlds.get("test_level");
 		
 		camera = new Camera();
 		player = new PlayerActor(world, 4, 4, animations);
@@ -131,6 +136,24 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer, Cutsce
 	
 	@Override
 	public void update(float delta) {
+		if (Gdx.input.isKeyJustPressed(Keys.J)) {
+			WorldObject obj = world.getMap().getTile(13, 10).getObject();
+			if (obj instanceof Door) {
+				Door door = (Door)obj;
+//				if (door.getState() == Door.STATE.CLOSED) {
+//					door.open();
+//				} else if (door.getState() == Door.STATE.OPEN) {
+//					door.close();
+//				}
+				
+				queueEvent(new DoorEvent(door, true));
+				queueEvent(new DoorEvent(door, false));
+			}
+		}
+		if (Gdx.input.isKeyJustPressed(Keys.K)) {
+			queueEvent(new ActorWalkEvent(player, DIRECTION.NORTH));
+		}
+		
 		while (currentEvent == null || currentEvent.isFinished()) { // no active event
 			if (eventQueue.peek() == null) { // no event queued up
 				currentEvent = null;
@@ -163,7 +186,7 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer, Cutsce
 		gameViewport.apply();
 		batch.begin();
 		worldRenderer.render(batch, camera);
-		queueRenderer.render(batch, currentEvent);
+		//queueRenderer.render(batch, currentEvent);
 		batch.end();
 		
 		uiStage.draw();
@@ -221,9 +244,8 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer, Cutsce
 	}
 	
 	public void changeWorld(World newWorld, int x, int y, DIRECTION face) {
-		player.changeWorld(newWorld);
+		player.changeWorld(newWorld, x, y);
 		this.world = newWorld;
-		player.teleport(x, y);
 		player.refaceWithoutAnimation(face);
 		this.worldRenderer.setWorld(newWorld);
 		this.camera.update(player.getWorldX()+0.5f, player.getWorldY()+0.5f);

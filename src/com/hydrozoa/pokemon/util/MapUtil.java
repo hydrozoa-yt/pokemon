@@ -19,6 +19,7 @@ import com.hydrozoa.pokemon.model.TeleportTile;
 import com.hydrozoa.pokemon.model.Tile;
 import com.hydrozoa.pokemon.model.actor.Actor;
 import com.hydrozoa.pokemon.model.actor.LimitedWalkingBehavior;
+import com.hydrozoa.pokemon.model.world.Door;
 import com.hydrozoa.pokemon.model.world.World;
 import com.hydrozoa.pokemon.model.world.WorldObject;
 import com.hydrozoa.pokemon.model.world.cutscene.CutsceneEventQueuer;
@@ -32,19 +33,25 @@ import com.hydrozoa.pokemon.model.world.cutscene.CutscenePlayer;
 public class MapUtil {
 	
 	private Animation flowerAnimation;
+	private Animation doorOpen;
+	private Animation doorClose;
 	
 	private AnimationSet npcAnimations;
 	
 	private AssetManager assetManager;
+	private CutscenePlayer player;
 	private CutsceneEventQueuer broadcaster;
 	
-	public MapUtil(AssetManager assetManager, CutsceneEventQueuer broadcaster, AnimationSet npcAnimations) {
+	public MapUtil(AssetManager assetManager, CutscenePlayer player, CutsceneEventQueuer broadcaster, AnimationSet npcAnimations) {
 		this.assetManager = assetManager;
+		this.player = player;
 		this.broadcaster = broadcaster;
 		this.npcAnimations = npcAnimations;
 		
 		TextureAtlas atlas = assetManager.get("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
 		flowerAnimation = new Animation(0.8f, atlas.findRegions("flowers"), PlayMode.LOOP_PINGPONG);
+		doorOpen = new Animation(0.8f/4f, atlas.findRegions("woodenDoor"), PlayMode.NORMAL);
+		doorClose = new Animation(0.5f/4f, atlas.findRegions("woodenDoor"), PlayMode.REVERSED);
 	}
 	
 	/**
@@ -87,6 +94,11 @@ public class MapUtil {
 		greeting.addNode(firstNode);
 		actor.setDialogue(greeting);
 		
+		world.getMap().setTile(new TeleportTile(null, player, broadcaster, "test_indoors", 4,0,DIRECTION.NORTH,Color.BLACK), 13, 10);
+		
+		Door door = new Door(13,10, doorOpen, doorClose);
+		world.addObject(door);
+		
 		return world;
 	}
 	
@@ -116,7 +128,7 @@ public class MapUtil {
 			}
 		}
 		
-		world.getMap().setTile(new TeleportTile(null, broadcaster, "test_level", 13,10,DIRECTION.SOUTH,Color.WHITE), 4, 0);
+		world.getMap().setTile(new TeleportTile(null, player, broadcaster, "test_level", 13,10,DIRECTION.SOUTH,Color.WHITE), 4, 0);
 		addRug(world,3,0);
 		
 		return world;

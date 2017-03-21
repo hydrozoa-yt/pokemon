@@ -18,6 +18,7 @@ public class Actor implements YSortable {
 	private int x;
 	private int y;
 	private DIRECTION facing;
+	private boolean visible = true;
 	
 	private float worldX, worldY;
 	
@@ -27,6 +28,7 @@ public class Actor implements YSortable {
 	private float animTimer;
 	private float WALK_TIME_PER_TILE = 0.3f;
 	private float REFACE_TIME = 0.1f;
+	private boolean noMoveNotifications = false;
 	
 	private float walkTimer;
 	private boolean moveRequestThisFrame;
@@ -144,6 +146,52 @@ public class Actor implements YSortable {
 				return false;
 			}
 		}
+		if (world.getMap().getTile(x+dir.getDX(), y+dir.getDY()).actorBeforeStep(this) == true) {
+			initializeMove(dir);
+			world.getMap().getTile(x, y).setActor(null);
+			x += dir.getDX();
+			y += dir.getDY();
+			world.getMap().getTile(x, y).setActor(this);
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Same as #move() but doesn't notify receiving Tile.
+	 * Doesn't obey Tile#actorBeforeStep and Tile#actorStep
+	 */
+	public boolean moveWithoutNotifications(DIRECTION dir) {
+		noMoveNotifications = true;
+		if (state == ACTOR_STATE.WALKING) {
+			if (facing == dir) {
+				moveRequestThisFrame = true;
+			}
+			return false;
+		}
+		// edge of world test
+		if (x+dir.getDX() >= world.getMap().getWidth() || x+dir.getDX() < 0 || y+dir.getDY() >= world.getMap().getHeight() || y+dir.getDY() < 0) {
+			reface(dir);
+			return false;
+		}
+		// unwalkable tile test
+		if (!world.getMap().getTile(x+dir.getDX(), y+dir.getDY()).walkable()) {
+			reface(dir);
+			return false;
+		}
+		// actor test
+		if (world.getMap().getTile(x+dir.getDX(), y+dir.getDY()).getActor() != null) {
+			reface(dir);
+			return false;
+		}
+		// object test
+		if (world.getMap().getTile(x+dir.getDX(), y+dir.getDY()).getObject() != null) {
+			WorldObject o = world.getMap().getTile(x+dir.getDX(), y+dir.getDY()).getObject();
+			if (!o.isWalkable()) {
+				reface(dir);
+				return false;
+			}
+		}
 		initializeMove(dir);
 		world.getMap().getTile(x, y).setActor(null);
 		x += dir.getDX();
@@ -172,7 +220,11 @@ public class Actor implements YSortable {
 		this.srcY = 0;
 		this.destX = 0;
 		this.destY = 0;
-		world.getMap().getTile(x, y).actorStep(this);
+		if (!noMoveNotifications) {
+			world.getMap().getTile(x, y).actorStep(this);
+		} else {
+			noMoveNotifications = false;
+		}
 	}
 	
 	/**
@@ -222,8 +274,9 @@ public class Actor implements YSortable {
 		return 1.5f;
 	}
 	
-	public void changeWorld(World world) {
+	public void changeWorld(World world, int newX, int newY) {
 		this.world.removeActor(this);
+		this.teleport(newX, newY);
 		this.world = world;
 		this.world.addActor(this);
 	}
@@ -246,5 +299,13 @@ public class Actor implements YSortable {
 	
 	public World getWorld() {
 		return world;
+	}
+	
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+	
+	public boolean isVisible() {
+		return visible;
 	}
 }
