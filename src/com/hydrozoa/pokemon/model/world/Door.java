@@ -31,14 +31,6 @@ public class Door extends WorldObject {
 		this.closeAnimation = closeAnimation;
 	}
 	
-//	public void setOpen() {
-//		this.state = STATE.OPEN;
-//	}
-//	
-//	public void setClosed() {
-//		this.state = STATE.CLOSED;
-//	}
-	
 	public void open() {
 		state = STATE.OPENING;
 	}

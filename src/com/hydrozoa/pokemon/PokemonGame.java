@@ -85,8 +85,6 @@ public class PokemonGame extends Game {
 		assetManager.load("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
 		assetManager.load("res/graphics_packed/ui/uipack.atlas", TextureAtlas.class);
 		assetManager.load("res/graphics_packed/battle/battlepack.atlas", TextureAtlas.class);
-		assetManager.load("res/grass1.png", Texture.class);
-		assetManager.load("res/grass2.png", Texture.class);
 		assetManager.load("res/graphics/pokemon/bulbasaur.png", Texture.class);
 		assetManager.load("res/graphics/pokemon/slowpoke.png", Texture.class);
 		
@@ -99,6 +97,7 @@ public class PokemonGame extends Game {
 			assetManager.load("res/graphics/transitions/transition_"+i+".png", Texture.class);
 		}
 		assetManager.load("res/font/small_letters_font.fnt", BitmapFont.class);
+		
 		assetManager.finishLoading();
 		
 		skin = SkinGenerator.generateSkin(assetManager);

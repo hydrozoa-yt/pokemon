@@ -116,58 +116,121 @@ brendan_walk_west
   orig: 16, 24
   offset: 0, 0
   index: 2
-flowers
+brown_path
   rotate: false
   xy: 52, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 0
-flowers
+  index: -1
+brown_path_grass_east
   rotate: false
   xy: 70, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 1
-flowers
+  index: -1
+brown_path_grass_north
   rotate: false
   xy: 138, 84
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 2
-grass
+  index: -1
+brown_path_grass_northeast
   rotate: false
   xy: 156, 84
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-grass1
+brown_path_grass_northwest
   rotate: false
   xy: 174, 84
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-grass2
+brown_path_grass_south
   rotate: false
   xy: 192, 84
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-indoor_tiles
+brown_path_grass_southeast
   rotate: false
   xy: 210, 84
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-indoor_tiles_shadow
+brown_path_grass_southwest
   rotate: false
   xy: 228, 84
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+brown_path_grass_west
+  rotate: false
+  xy: 138, 66
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+flowers
+  rotate: false
+  xy: 156, 66
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 0
+flowers
+  rotate: false
+  xy: 174, 66
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+flowers
+  rotate: false
+  xy: 192, 66
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+grass
+  rotate: false
+  xy: 210, 66
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+grass1
+  rotate: false
+  xy: 228, 66
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+grass2
+  rotate: false
+  xy: 124, 48
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+indoor_tiles
+  rotate: false
+  xy: 124, 30
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+indoor_tiles_shadow
+  rotate: false
+  xy: 142, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -188,7 +251,7 @@ rug
   index: -1
 sign
   rotate: false
-  xy: 138, 66
+  xy: 124, 12
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -202,14 +265,14 @@ small_house
   index: -1
 wall_bottom
   rotate: false
-  xy: 156, 66
+  xy: 142, 30
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_top
   rotate: false
-  xy: 174, 66
+  xy: 160, 48
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
