@@ -22,6 +22,9 @@ public class Actor implements YSortable {
 	
 	private float worldX, worldY;
 	
+	// For callbacks to World
+	private ActorObserver observer;
+	
 	/* state specific */
 	private int srcX, srcY;
 	private int destX, destY;
@@ -40,6 +43,7 @@ public class Actor implements YSortable {
 	private Dialogue dialogue;
 	
 	public Actor(World world, int x, int y, AnimationSet animations) {
+		this.observer = world;
 		this.world = world;
 		this.x = x;
 		this.y = y;

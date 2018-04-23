@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.hydrozoa.pokemon.model.DIRECTION;
 import com.hydrozoa.pokemon.model.TileMap;
 import com.hydrozoa.pokemon.model.actor.Actor;
 import com.hydrozoa.pokemon.model.actor.ActorBehavior;
+import com.hydrozoa.pokemon.model.actor.ActorObserver;
 
 /**
  * Contains data about the game world, such as references to Actors, and WorldObjects.
@@ -15,7 +17,7 @@ import com.hydrozoa.pokemon.model.actor.ActorBehavior;
  * 
  * @author hydrozoa
  */
-public class World {
+public class World implements ActorObserver {
 	
 	/** Unique name used to refer to this world */
 	private String name;
@@ -84,5 +86,20 @@ public class World {
 
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public void actorMoved(Actor a, DIRECTION direction, int x, int y) {
+		
+	}
+
+	@Override
+	public void attemptedMove(Actor a, DIRECTION direction) {
+		
+	}
+
+	@Override
+	public void actorBeforeMoved(Actor a, DIRECTION direction) {
+		
 	}
 }

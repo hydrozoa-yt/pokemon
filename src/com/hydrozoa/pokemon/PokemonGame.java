@@ -3,6 +3,7 @@ package com.hydrozoa.pokemon;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -15,6 +16,7 @@ import com.hydrozoa.pokemon.battle.animation.BattleAnimationAccessor;
 import com.hydrozoa.pokemon.battle.animation.BattleSprite;
 import com.hydrozoa.pokemon.battle.animation.BattleSpriteAccessor;
 import com.hydrozoa.pokemon.battle.moves.MoveDatabase;
+import com.hydrozoa.pokemon.model.world.World;
 import com.hydrozoa.pokemon.screen.AbstractScreen;
 import com.hydrozoa.pokemon.screen.BattleScreen;
 import com.hydrozoa.pokemon.screen.GameScreen;
@@ -24,6 +26,7 @@ import com.hydrozoa.pokemon.screen.transition.BattleBlinkTransition;
 import com.hydrozoa.pokemon.screen.transition.BattleBlinkTransitionAccessor;
 import com.hydrozoa.pokemon.screen.transition.Transition;
 import com.hydrozoa.pokemon.util.SkinGenerator;
+import com.hydrozoa.pokemon.util.WorldLoader;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
@@ -82,6 +85,8 @@ public class PokemonGame extends Game {
 		 * LOADING ASSETS
 		 */
 		assetManager = new AssetManager();
+		assetManager.setLoader(World.class, new WorldLoader(new InternalFileHandleResolver()));
+		
 		assetManager.load("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
 		assetManager.load("res/graphics_packed/ui/uipack.atlas", TextureAtlas.class);
 		assetManager.load("res/graphics_packed/battle/battlepack.atlas", TextureAtlas.class);
@@ -97,6 +102,7 @@ public class PokemonGame extends Game {
 			assetManager.load("res/graphics/transitions/transition_"+i+".png", Texture.class);
 		}
 		assetManager.load("res/font/small_letters_font.fnt", BitmapFont.class);
+		assetManager.load("res/worlds/test_map.txt", World.class);
 		
 		assetManager.finishLoading();
 		

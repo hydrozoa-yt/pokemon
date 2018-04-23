@@ -14,11 +14,7 @@ public class TileMap {
 		tiles = new Tile[width][height];
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				if (Math.random() > 0.5d) {
-					tiles[x][y] = new Tile(TERRAIN.GRASS_1);
-				} else {
-					tiles[x][y] = new Tile(TERRAIN.GRASS_2);
-				}
+				tiles[x][y] = new Tile(TERRAIN.GRASS_1);
 			}
 		}
 	}

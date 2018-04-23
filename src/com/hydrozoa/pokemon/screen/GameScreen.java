@@ -98,7 +98,7 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer, Cutsce
 		worlds.put("test_level", mapUtil.loadWorld1());
 		worlds.put("test_indoors", mapUtil.loadWorld2());
 		
-		world = worlds.get("test_level");
+		world = app.getAssetManager().get("res/worlds/test_map.txt", World.class);
 		
 		camera = new Camera();
 		player = new PlayerActor(world, 4, 4, animations);

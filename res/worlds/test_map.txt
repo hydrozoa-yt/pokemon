@@ -1,0 +1,37 @@
+test_map	200		200
+
+fillTerrain				GRASS_1
+
+setTerrain		0	0	GRASS_2
+setTerrain		1	0	GRASS_2
+setTerrain		2	0	GRASS_2
+
+addTree			0	0
+addTree			2	0
+addTree			4	0
+addTree			6	0
+addTree			8	0
+addTree			10	0
+addTree			12	0
+addTree			14	0
+addTree			16	0
+addTree			18	0
+addTree			20	0
+
+addTree			0	0
+addTree			0	2
+addTree			0	4
+addTree			0	6
+addTree			0	8
+addTree			0	10
+addTree			0	12
+addTree			0	14
+addTree			0	16
+addTree			0	18
+addTree			0	20
+
+addFlowers		2	4
+addFlowers		7	4
+addFlowers		9	4
+
+addHouse		10	10

@@ -22,6 +22,10 @@ public class Tile {
 		this.terrain = terrain;
 		this.walkable = walkable;
 	}
+	
+	public void setTerrain(TERRAIN terrain) {
+		this.terrain = terrain;
+	}
 
 	public TERRAIN getTerrain() {
 		return terrain;

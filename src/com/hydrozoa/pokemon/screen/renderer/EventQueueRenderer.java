@@ -25,9 +25,9 @@ public class EventQueueRenderer {
 	
 	private Queue eventQueue;
 	
-	public EventQueueRenderer(Skin skin, Queue eventQueue) {
+	public EventQueueRenderer(Skin skin, Queue queue) {
 		this.skin = skin;
-		this.eventQueue = eventQueue;
+		this.eventQueue = queue;
 		patch = skin.getPatch("optionbox");
 		font = skin.getFont("font");
 		layout = new GlyphLayout();

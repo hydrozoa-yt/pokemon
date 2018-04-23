@@ -74,7 +74,6 @@ public class MapUtil {
 			}
 		}
 		
-		
 		addHouse(world,10,10);
 		addFlowers(world,5,5);
 		for (int i = 0; i < 10; i++) {
