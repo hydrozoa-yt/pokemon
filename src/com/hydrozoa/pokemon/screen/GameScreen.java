@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hydrozoa.pokemon.PokemonGame;
@@ -25,14 +26,10 @@ import com.hydrozoa.pokemon.dialogue.Dialogue;
 import com.hydrozoa.pokemon.model.Camera;
 import com.hydrozoa.pokemon.model.DIRECTION;
 import com.hydrozoa.pokemon.model.actor.PlayerActor;
-import com.hydrozoa.pokemon.model.world.Door;
 import com.hydrozoa.pokemon.model.world.World;
-import com.hydrozoa.pokemon.model.world.WorldObject;
 import com.hydrozoa.pokemon.model.world.cutscene.ActorWalkEvent;
 import com.hydrozoa.pokemon.model.world.cutscene.CutsceneEvent;
-import com.hydrozoa.pokemon.model.world.cutscene.CutsceneEventQueuer;
 import com.hydrozoa.pokemon.model.world.cutscene.CutscenePlayer;
-import com.hydrozoa.pokemon.model.world.cutscene.DoorEvent;
 import com.hydrozoa.pokemon.screen.renderer.EventQueueRenderer;
 import com.hydrozoa.pokemon.screen.renderer.WorldRenderer;
 import com.hydrozoa.pokemon.screen.transition.Action;
@@ -41,12 +38,11 @@ import com.hydrozoa.pokemon.screen.transition.FadeOutTransition;
 import com.hydrozoa.pokemon.ui.DialogueBox;
 import com.hydrozoa.pokemon.ui.OptionBox;
 import com.hydrozoa.pokemon.util.AnimationSet;
-import com.hydrozoa.pokemon.util.MapUtil;
 
 /**
  * @author hydrozoa
  */
-public class GameScreen extends AbstractScreen implements CutscenePlayer, CutsceneEventQueuer {
+public class GameScreen extends AbstractScreen implements CutscenePlayer {
 	
 	private InputMultiplexer multiplexer;
 	private DialogueController dialogueController;
@@ -58,7 +54,8 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer, Cutsce
 	private PlayerActor player;
 	private Camera camera;
 	private Dialogue dialogue;
-	private MapUtil mapUtil;
+	
+	/* cutscenes */
 	private Queue<CutsceneEvent> eventQueue = new ArrayDeque<CutsceneEvent>();
 	private CutsceneEvent currentEvent;
 	
@@ -94,14 +91,14 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer, Cutsce
 				atlas.findRegion("brendan_stand_west")
 		);
 		
-		mapUtil = new MapUtil(app.getAssetManager(), this, this, animations);
-		worlds.put("test_level", mapUtil.loadWorld1());
-		worlds.put("test_indoors", mapUtil.loadWorld2());
-		
-		world = app.getAssetManager().get("res/worlds/test_map.txt", World.class);
+		Array<World> loadedWorlds = app.getAssetManager().getAll(World.class, new Array<World>());
+		for (World w : loadedWorlds) {
+			worlds.put(w.getName(), w);
+		}
+		world = worlds.get("test_map");
 		
 		camera = new Camera();
-		player = new PlayerActor(world, 4, 4, animations);
+		player = new PlayerActor(world, 4, 4, animations, this);
 		world.addActor(player);
 		
 		initUI();
@@ -136,20 +133,6 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer, Cutsce
 	
 	@Override
 	public void update(float delta) {
-		if (Gdx.input.isKeyJustPressed(Keys.J)) {
-			WorldObject obj = world.getMap().getTile(13, 10).getObject();
-			if (obj instanceof Door) {
-				Door door = (Door)obj;
-//				if (door.getState() == Door.STATE.CLOSED) {
-//					door.open();
-//				} else if (door.getState() == Door.STATE.OPEN) {
-//					door.close();
-//				}
-				
-				queueEvent(new DoorEvent(door, true));
-				queueEvent(new DoorEvent(door, false));
-			}
-		}
 		if (Gdx.input.isKeyJustPressed(Keys.K)) {
 			queueEvent(new ActorWalkEvent(player, DIRECTION.NORTH));
 		}
@@ -186,7 +169,7 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer, Cutsce
 		gameViewport.apply();
 		batch.begin();
 		worldRenderer.render(batch, camera);
-		//queueRenderer.render(batch, currentEvent);
+		queueRenderer.render(batch, currentEvent);
 		batch.end();
 		
 		uiStage.draw();

@@ -51,7 +51,7 @@ public class DialogueController extends InputAdapter {
 			
 			if (thisNode instanceof LinearDialogueNode)  {
 				LinearDialogueNode node = (LinearDialogueNode)thisNode;
-				if (node.getPointers().isEmpty()) { // blind end, since to pointers
+				if (node.getPointers().isEmpty()) { // dead end, since no pointers
 					traverser = null;				// end dialogue
 					dialogueBox.setVisible(false);
 				} else {

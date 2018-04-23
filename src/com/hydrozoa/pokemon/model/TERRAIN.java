@@ -5,6 +5,7 @@ package com.hydrozoa.pokemon.model;
  */
 public enum TERRAIN {
 	
+	NONE,
 	GRASS_1,
 	GRASS_2,
 	INDOOR_TILES,

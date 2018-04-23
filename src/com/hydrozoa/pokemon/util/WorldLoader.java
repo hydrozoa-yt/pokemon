@@ -9,13 +9,16 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
+import com.hydrozoa.pokemon.model.DIRECTION;
 import com.hydrozoa.pokemon.model.TERRAIN;
+import com.hydrozoa.pokemon.model.TeleportTile;
 import com.hydrozoa.pokemon.model.world.World;
 import com.hydrozoa.pokemon.model.world.WorldObject;
 
@@ -77,6 +80,12 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 					break;
 				case "addHouse":
 					addHouse(asman, tokens[1], tokens[2]);
+					break;
+				case "teleport":
+					teleport(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5], tokens[6], tokens[7], tokens[8]);
+					break;
+				case "unwalkable":
+					unwalkable(tokens[1], tokens[2]);
 					break;
 				}
 			}
@@ -162,6 +171,39 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 		}
 		WorldObject house = new WorldObject(x, y, false, houseRegion, 5f, 5f, gridArray);
 		world.addObject(house);
+	}
+	
+	private void teleport(String sx, String sy, String sterrain, String stargetWorld, String stargetX, String stargetY, String stargetDir, String stransitionColor) {
+		int x = Integer.parseInt(sx);
+		int y = Integer.parseInt(sy);
+		
+		int targetX = Integer.parseInt(stargetX);
+		int targetY = Integer.parseInt(stargetY);
+		
+		TERRAIN terrain = TERRAIN.valueOf(sterrain);
+		DIRECTION targetDir = DIRECTION.valueOf(stargetDir);
+		
+		Color transitionColor;
+		switch (stransitionColor) {
+		case "WHITE":
+			transitionColor = Color.WHITE;
+			break;
+		case "BLACK":
+			transitionColor = Color.BLACK;
+			break;
+		default:
+			transitionColor = Color.BLACK;
+			break;
+		}
+		
+		TeleportTile tile = new TeleportTile(terrain, stargetWorld, targetX, targetY, targetDir, transitionColor);
+		world.getMap().setTile(tile, x, y);
+	}
+	
+	private void unwalkable(String sx, String sy) {
+		int x = Integer.parseInt(sx);
+		int y = Integer.parseInt(sy);
+		world.getMap().getTile(x, y).setWalkable(false);
 	}
 
 	@Override

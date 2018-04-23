@@ -8,7 +8,7 @@ import com.hydrozoa.pokemon.model.Tile;
 import com.hydrozoa.pokemon.model.actor.Actor;
 
 /**
- * Controller that interacts with what is in front of the Actor being controlled.
+ * Controller that interacts with what is in front of the player Actor.
  * 
  * @author hydrozoa
  */

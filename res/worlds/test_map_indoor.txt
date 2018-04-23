@@ -1,0 +1,46 @@
+test_map_indoor		7		7
+
+fillTerrain				INDOOR_TILES
+
+setTerrain		0	6	WALL_TOP
+setTerrain		1	6	WALL_TOP
+setTerrain		2	6	WALL_TOP
+setTerrain		3	6	WALL_TOP
+setTerrain		4	6	WALL_TOP
+setTerrain		5	6	WALL_TOP
+setTerrain		6	6	WALL_TOP
+
+setTerrain		0	5	WALL_BOTTOM
+setTerrain		1	5	WALL_BOTTOM
+setTerrain		2	5	WALL_BOTTOM
+setTerrain		3	5	WALL_BOTTOM
+setTerrain		4	5	WALL_BOTTOM
+setTerrain		5	5	WALL_BOTTOM
+setTerrain		6	5	WALL_BOTTOM
+
+setTerrain		0	4	INDOOR_TILES_SHADOW
+setTerrain		1	4	INDOOR_TILES_SHADOW
+setTerrain		2	4	INDOOR_TILES_SHADOW
+setTerrain		3	4	INDOOR_TILES_SHADOW
+setTerrain		4	4	INDOOR_TILES_SHADOW
+setTerrain		5	4	INDOOR_TILES_SHADOW
+setTerrain		6	4	INDOOR_TILES_SHADOW
+
+setTerrain		0	0	NONE
+setTerrain		1	0	NONE
+setTerrain		2	0	NONE
+setTerrain		3	0	NONE
+setTerrain		4	0	NONE
+setTerrain		5	0	NONE
+setTerrain		6	0	NONE
+
+unwalkable		0	0
+unwalkable		1	0
+unwalkable		2	0
+unwalkable		4	0
+unwalkable		5	0
+unwalkable		6	0
+
+addRug			2	0
+
+teleport		3	0	NONE	test_map	4	4	NORTH	BLACK

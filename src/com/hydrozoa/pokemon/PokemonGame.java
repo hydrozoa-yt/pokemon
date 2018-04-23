@@ -1,5 +1,7 @@
 package com.hydrozoa.pokemon;
 
+import java.io.File;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -102,7 +104,14 @@ public class PokemonGame extends Game {
 			assetManager.load("res/graphics/transitions/transition_"+i+".png", Texture.class);
 		}
 		assetManager.load("res/font/small_letters_font.fnt", BitmapFont.class);
-		assetManager.load("res/worlds/test_map.txt", World.class);
+		
+		File dir = new File("res/worlds/");
+		File[] directoryListing = dir.listFiles();
+		if (directoryListing != null) {
+			for (File child : directoryListing) {
+				assetManager.load(child.getPath(), World.class);
+		    }
+		}
 		
 		assetManager.finishLoading();
 		

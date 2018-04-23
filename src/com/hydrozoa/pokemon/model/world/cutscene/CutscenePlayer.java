@@ -25,4 +25,6 @@ public interface CutscenePlayer {
 	 * @return
 	 */
 	public World getWorld(String worldName);
+	
+	public void queueEvent(CutsceneEvent event);
 }

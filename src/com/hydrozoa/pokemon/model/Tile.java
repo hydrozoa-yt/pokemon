@@ -18,13 +18,12 @@ public class Tile {
 		this.terrain = terrain;
 	}
 	
-	public Tile(TERRAIN terrain, boolean walkable) {
-		this.terrain = terrain;
-		this.walkable = walkable;
-	}
-	
 	public void setTerrain(TERRAIN terrain) {
 		this.terrain = terrain;
+	}
+	
+	public void setWalkable(boolean walkable) {
+		this.walkable = walkable;
 	}
 
 	public TERRAIN getTerrain() {
