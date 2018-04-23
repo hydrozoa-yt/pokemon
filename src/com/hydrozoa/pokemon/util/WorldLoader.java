@@ -22,6 +22,11 @@ import com.hydrozoa.pokemon.model.TeleportTile;
 import com.hydrozoa.pokemon.model.world.World;
 import com.hydrozoa.pokemon.model.world.WorldObject;
 
+/**
+ * Small loader to load World.class into AssetManager.
+ * 
+ * @author Hydrozoa
+ */
 public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.WorldParameter> {
 	
 	private World world;
