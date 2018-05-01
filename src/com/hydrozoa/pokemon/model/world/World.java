@@ -47,6 +47,7 @@ public class World implements ActorObserver {
 	
 	public void addObject(WorldObject o) {
 		for (GridPoint2 p : o.getTiles()) {
+			//System.out.println("\t Adding tile: "+p.x+", "+p.y);
 			map.getTile(o.getX()+p.x, o.getY()+p.y).setObject(o);
 		}
 		objects.add(o);
