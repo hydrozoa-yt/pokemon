@@ -43,4 +43,4 @@ unwalkable		6	0
 
 addRug			2	0
 
-teleport		3	0	NONE	test_map	4	4	NORTH	BLACK
+teleport		3	0	NONE	test_map	13	10	NORTH	BLACK

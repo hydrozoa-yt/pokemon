@@ -36,4 +36,5 @@ addFlowers		9	4
 
 addHouse		10	10
 
-teleport		4	5	NONE	test_map_indoor		3	1	NORTH	WHITE
+teleport		13	10	NONE	test_map_indoor		3	1	NORTH	WHITE
+addDoor			13	10

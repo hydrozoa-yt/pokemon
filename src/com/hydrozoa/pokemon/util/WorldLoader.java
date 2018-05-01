@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import com.hydrozoa.pokemon.model.DIRECTION;
 import com.hydrozoa.pokemon.model.TERRAIN;
 import com.hydrozoa.pokemon.model.TeleportTile;
+import com.hydrozoa.pokemon.model.world.Door;
 import com.hydrozoa.pokemon.model.world.World;
 import com.hydrozoa.pokemon.model.world.WorldObject;
 
@@ -85,6 +86,9 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 					break;
 				case "addHouse":
 					addHouse(asman, tokens[1], tokens[2]);
+					break;
+				case "addDoor":
+					addDoor(tokens[1], tokens[2]);
 					break;
 				case "teleport":
 					teleport(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5], tokens[6], tokens[7], tokens[8]);
@@ -209,6 +213,13 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 		int x = Integer.parseInt(sx);
 		int y = Integer.parseInt(sy);
 		world.getMap().getTile(x, y).setWalkable(false);
+	}
+	
+	private void addDoor(String sx, String sy) {
+		int x = Integer.parseInt(sx);
+		int y = Integer.parseInt(sy);
+		Door door = new Door(x, y, doorOpen, doorClose);
+		world.addObject(door);
 	}
 
 	@Override

@@ -31,6 +31,7 @@ import com.hydrozoa.pokemon.model.world.cutscene.ActorWalkEvent;
 import com.hydrozoa.pokemon.model.world.cutscene.CutsceneEvent;
 import com.hydrozoa.pokemon.model.world.cutscene.CutscenePlayer;
 import com.hydrozoa.pokemon.screen.renderer.EventQueueRenderer;
+import com.hydrozoa.pokemon.screen.renderer.TileInfoRenderer;
 import com.hydrozoa.pokemon.screen.renderer.WorldRenderer;
 import com.hydrozoa.pokemon.screen.transition.Action;
 import com.hydrozoa.pokemon.screen.transition.FadeInTransition;
@@ -64,7 +65,9 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer {
 	private Viewport gameViewport;
 	
 	private WorldRenderer worldRenderer;
-	private EventQueueRenderer queueRenderer;
+	private EventQueueRenderer queueRenderer; // renders cutscenequeue
+	private TileInfoRenderer tileInfoRenderer;
+	private boolean renderTileInfo = true;
 	
 	private int uiScale = 2;
 	
@@ -114,6 +117,7 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer {
 		
 		worldRenderer = new WorldRenderer(getApp().getAssetManager(), world);
 		queueRenderer = new EventQueueRenderer(app.getSkin(), eventQueue);
+		tileInfoRenderer = new TileInfoRenderer(world, camera);
 	}
 
 	@Override
@@ -133,8 +137,8 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer {
 	
 	@Override
 	public void update(float delta) {
-		if (Gdx.input.isKeyJustPressed(Keys.K)) {
-			queueEvent(new ActorWalkEvent(player, DIRECTION.NORTH));
+		if (Gdx.input.isKeyJustPressed(Keys.F12)) {
+			renderTileInfo = !renderTileInfo;
 		}
 		
 		while (currentEvent == null || currentEvent.isFinished()) { // no active event
@@ -170,6 +174,9 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer {
 		batch.begin();
 		worldRenderer.render(batch, camera);
 		queueRenderer.render(batch, currentEvent);
+		if (renderTileInfo) {
+			tileInfoRenderer.render(batch, Gdx.input.getX(), Gdx.input.getY());
+		}
 		batch.end();
 		
 		uiStage.draw();
