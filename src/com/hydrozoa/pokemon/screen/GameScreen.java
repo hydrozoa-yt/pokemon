@@ -101,7 +101,7 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer {
 		world = worlds.get("test_map");
 		
 		camera = new Camera();
-		player = new PlayerActor(world, 4, 4, animations, this);
+		player = new PlayerActor(world, world.getSafeX(), world.getSafeY(), animations, this);
 		world.addActor(player);
 		
 		initUI();

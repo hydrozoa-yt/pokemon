@@ -1,4 +1,4 @@
-test_map_indoor		7		7
+test_map_indoor		7	7		1	1
 
 fillTerrain				INDOOR_TILES
 

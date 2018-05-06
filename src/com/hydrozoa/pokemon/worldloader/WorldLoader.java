@@ -1,8 +1,9 @@
-package com.hydrozoa.pokemon.util;
+package com.hydrozoa.pokemon.worldloader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
@@ -58,7 +59,7 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 				// header of file
 				if (currentLine == 1) {
 					String[] tokens = line.split("\\s+");
-					world = new World(tokens[0], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
+					world = new World(tokens[0], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
 					continue;
 				}
 				
@@ -75,17 +76,17 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 				case "setTerrain":
 					setTerrain(tokens[1], tokens[2], tokens[3]);
 					break;
-				case "addTree":
-					addTree(asman, tokens[1], tokens[2]);
-					break;
 				case "addFlowers":
 					addFlowers(tokens[1], tokens[2]);
 					break;
 				case "addRug":
 					addRug(asman, tokens[1], tokens[2]);
 					break;
-				case "addHouse":
-					addHouse(asman, tokens[1], tokens[2]);
+				case "addObj":
+					addGameWorldObject(asman, tokens[1], tokens[2], tokens[3]);
+					break;
+				case "addTree":
+					addGameWorldObject(asman, tokens[1], tokens[2], GAMEWORLD_OBJ.BIG_TREE);
 					break;
 				case "addDoor":
 					addDoor(tokens[1], tokens[2]);
@@ -119,21 +120,6 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 		world.getMap().getTile(ix, iy).setTerrain(t);
 	}
 	
-	private void addTree(AssetManager assetManager, String sx, String sy) {
-		int x = Integer.parseInt(sx);
-		int y = Integer.parseInt(sy);
-		
-		TextureAtlas atlas = assetManager.get("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
-		TextureRegion treeRegion = atlas.findRegion("large_tree");
-		GridPoint2[] gridArray = new GridPoint2[2*2];
-		gridArray[0] = new GridPoint2(0,0);
-		gridArray[1] = new GridPoint2(0,1);
-		gridArray[2] = new GridPoint2(1,1);
-		gridArray[3] = new GridPoint2(1,0);
-		WorldObject tree = new WorldObject(x, y, false, treeRegion, 2f, 3f, gridArray);
-		world.addObject(tree);
-	}
-	
 	private void addFlowers(String sx, String sy) {
 		int x = Integer.parseInt(sx);
 		int y = Integer.parseInt(sy);
@@ -161,10 +147,25 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 		world.addObject(rug);
 	}
 	
-	private void addHouse(AssetManager assetManager, String sx, String sy) {
+	private void addGameWorldObject(AssetManager assetManager, String sx, String sy, String stype) {
 		int x = Integer.parseInt(sx);
 		int y = Integer.parseInt(sy);
 		
+		GAMEWORLD_OBJ type = null;
+		try {
+			type = GAMEWORLD_OBJ.valueOf(stype);
+		} catch (Exception e) {
+			System.err.println("Couldn't find GAMEWORLD_OBJ of type "+stype);
+			e.printStackTrace();
+			Gdx.app.exit();
+		}
+		
+		TextureAtlas atlas = assetManager.get("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
+		TextureRegion objRegion = atlas.findRegion(type.getPath());
+		
+		WorldObject obj = new WorldObject(x, y, false, objRegion, type.getSizeX(), type.getSizeY(), type.getTiles());
+		world.addObject(obj);
+		/*
 		TextureAtlas atlas = assetManager.get("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
 		TextureRegion houseRegion = atlas.findRegion("small_house");
 		GridPoint2[] gridArray = new GridPoint2[5*4-1];
@@ -180,6 +181,18 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 		}
 		WorldObject house = new WorldObject(x, y, false, houseRegion, 5f, 5f, gridArray);
 		world.addObject(house);
+		*/
+	}
+	
+	private void addGameWorldObject(AssetManager assetManager, String sx, String sy, GAMEWORLD_OBJ type) {
+		int x = Integer.parseInt(sx);
+		int y = Integer.parseInt(sy);
+		
+		TextureAtlas atlas = assetManager.get("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
+		TextureRegion objRegion = atlas.findRegion(type.getPath());
+		
+		WorldObject obj = new WorldObject(x, y, false, objRegion, type.getSizeX(), type.getSizeY(), type.getTiles());
+		world.addObject(obj);
 	}
 	
 	private void teleport(String sx, String sy, String sterrain, String stargetWorld, String stargetX, String stargetY, String stargetDir, String stransitionColor) {

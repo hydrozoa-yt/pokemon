@@ -28,7 +28,7 @@ import com.hydrozoa.pokemon.screen.transition.BattleBlinkTransition;
 import com.hydrozoa.pokemon.screen.transition.BattleBlinkTransitionAccessor;
 import com.hydrozoa.pokemon.screen.transition.Transition;
 import com.hydrozoa.pokemon.util.SkinGenerator;
-import com.hydrozoa.pokemon.util.WorldLoader;
+import com.hydrozoa.pokemon.worldloader.WorldLoader;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;

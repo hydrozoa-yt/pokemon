@@ -21,15 +21,26 @@ public class World implements ActorObserver {
 	
 	/** Unique name used to refer to this world */
 	private String name;
+	private int safeX;
+	private int safeY;
 	
 	private TileMap map;
 	private List<Actor> actors;
 	private HashMap<Actor, ActorBehavior> brains;
 	private List<WorldObject> objects;
 	
-	public World(String name, int width, int height) {
+	/**
+	 * @param name		Name of the world for internal model
+	 * @param width		Size of world in tiles
+	 * @param height
+	 * @param safeX		Coord player can stand on, fly to
+	 * @param safeY
+	 */
+	public World(String name, int width, int height, int safeX, int safeY) {
 		this.name = name;
 		this.map = new TileMap(width, height);
+		this.safeX = safeX;
+		this.safeY = safeY;
 		actors = new ArrayList<Actor>();
 		brains = new HashMap<Actor, ActorBehavior>();
 		objects = new ArrayList<WorldObject>();
@@ -87,6 +98,14 @@ public class World implements ActorObserver {
 
 	public String getName() {
 		return name;
+	}
+	
+	public int getSafeX() {
+		return safeX;
+	}
+	
+	public int getSafeY() {
+		return safeY;
 	}
 
 	@Override

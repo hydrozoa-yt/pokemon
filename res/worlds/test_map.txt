@@ -1,4 +1,4 @@
-test_map	200		200
+test_map		24	22				4	2
 
 fillTerrain				GRASS_1
 
@@ -7,6 +7,7 @@ setTerrain		1	0	GRASS_2
 setTerrain		2	0	GRASS_2
 
 addTree			0	0
+addTree			2	2
 addTree			2	0
 addTree			4	0
 addTree			6	0
@@ -17,6 +18,30 @@ addTree			14	0
 addTree			16	0
 addTree			18	0
 addTree			20	0
+addTree			22	0
+
+addTree			18	2
+addTree			20	2
+addTree			22	2
+
+addTree			20	4
+addTree			22	4
+
+addTree			22	6
+addTree			22	8
+addTree			22	10
+addTree			22	12
+addTree			22	14
+addTree			22	16
+addTree			22	18
+addTree			22	20
+
+addTree			20	18
+addTree			20	20
+
+addTree			18	20
+addTree			16	20
+addTree			14	20
 
 addTree			0	0
 addTree			0	2
@@ -30,11 +55,30 @@ addTree			0	16
 addTree			0	18
 addTree			0	20
 
-addFlowers		2	4
+addTree			2	18
+
+addTree			2	20
+addTree			4	20
+addTree			6	20
+addTree			8	20
+addTree			10	20
+
+addObj			5	6	LABORATORY
+addDoor			9	6
+addObj			8	5	SIGN
+
+addFlowers		6	5
+addFlowers		6	4
+addFlowers		7	5
 addFlowers		7	4
-addFlowers		9	4
 
-addHouse		10	10
+addFlowers		5	12
+addFlowers		2	12
+addFlowers		3	13
+addFlowers		2	14
+addObj			4	14	SMALL_HOUSE
+addDoor			7	14
+addObj			9	14	SIGN
 
-teleport		13	10	NONE	test_map_indoor		3	0	NORTH	WHITE
-addDoor			13	10
+//teleport		13	10	NONE	test_map_indoor		3	0	NORTH	WHITE
+//addDoor			13	10
