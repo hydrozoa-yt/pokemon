@@ -21,4 +21,4 @@ You can also use an IDE like Eclipse to do all this for you.
 * Add image assets to the tileset in res/graphics_unpacked/tiles/
 * Add objects (addObj-command in map format) to help maps makers
 
-Feel free to merge your changes with this repository. Contact me through YouTube.
+Feel free to merge your changes with this repository. Contact me through YouTube or e-mail hydrozoa.rs [at] gmail.com.
