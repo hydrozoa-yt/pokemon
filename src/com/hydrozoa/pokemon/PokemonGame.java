@@ -28,6 +28,8 @@ import com.hydrozoa.pokemon.screen.transition.BattleBlinkTransition;
 import com.hydrozoa.pokemon.screen.transition.BattleBlinkTransitionAccessor;
 import com.hydrozoa.pokemon.screen.transition.Transition;
 import com.hydrozoa.pokemon.util.SkinGenerator;
+import com.hydrozoa.pokemon.worldloader.LWorldObjectDb;
+import com.hydrozoa.pokemon.worldloader.LWorldObjectLoader;
 import com.hydrozoa.pokemon.worldloader.WorldLoader;
 
 import aurelienribon.tweenengine.Tween;
@@ -54,9 +56,18 @@ public class PokemonGame extends Game {
 	
 	private ShaderProgram overlayShader;
 	private ShaderProgram transitionShader;
+	
+	private String version;
 
 	@Override
 	public void create() {
+		/*
+		 * LOAD VERSION
+		 */
+		version = Gdx.files.internal("version.txt").readString();
+		System.out.println("Pokémon by Hydrozoa, version "+version);
+		Gdx.app.getGraphics().setTitle("Pokémon by Hydrozoa, version "+version);
+		
 		/*
 		 * LOADING SHADERS
 		 */
@@ -87,7 +98,10 @@ public class PokemonGame extends Game {
 		 * LOADING ASSETS
 		 */
 		assetManager = new AssetManager();
+		assetManager.setLoader(LWorldObjectDb.class, new LWorldObjectLoader(new InternalFileHandleResolver()));
 		assetManager.setLoader(World.class, new WorldLoader(new InternalFileHandleResolver()));
+		
+		assetManager.load("res/LWorldObjects.xml", LWorldObjectDb.class);
 		
 		assetManager.load("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
 		assetManager.load("res/graphics_packed/ui/uipack.atlas", TextureAtlas.class);
@@ -176,5 +190,9 @@ public class PokemonGame extends Game {
 	
 	public MoveDatabase getMoveDatabase() {
 		return moveDatabase;
+	}
+	
+	public String getVersion() {
+		return version;
 	}
 }

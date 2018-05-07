@@ -67,7 +67,7 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer {
 	private WorldRenderer worldRenderer;
 	private EventQueueRenderer queueRenderer; // renders cutscenequeue
 	private TileInfoRenderer tileInfoRenderer;
-	private boolean renderTileInfo = true;
+	private boolean renderTileInfo = false;
 	
 	private int uiScale = 2;
 	

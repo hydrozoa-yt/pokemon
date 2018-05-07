@@ -86,7 +86,7 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 					addGameWorldObject(asman, tokens[1], tokens[2], tokens[3]);
 					break;
 				case "addTree":
-					addGameWorldObject(asman, tokens[1], tokens[2], GAMEWORLD_OBJ.BIG_TREE);
+					addGameWorldObject(asman, tokens[1], tokens[2], "BIG_TREE");
 					break;
 				case "addDoor":
 					addDoor(tokens[1], tokens[2]);
@@ -151,48 +151,14 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 		int x = Integer.parseInt(sx);
 		int y = Integer.parseInt(sy);
 		
-		GAMEWORLD_OBJ type = null;
-		try {
-			type = GAMEWORLD_OBJ.valueOf(stype);
-		} catch (Exception e) {
-			System.err.println("Couldn't find GAMEWORLD_OBJ of type "+stype);
-			e.printStackTrace();
-			Gdx.app.exit();
-		}
+		LWorldObjectDb objDb = assetManager.get("res/LWorldObjects.xml", LWorldObjectDb.class);
+		LWorldObject obj = objDb.getLWorldObject(stype);
 		
 		TextureAtlas atlas = assetManager.get("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
-		TextureRegion objRegion = atlas.findRegion(type.getPath());
+		TextureRegion objRegion = atlas.findRegion(obj.getImageName());
 		
-		WorldObject obj = new WorldObject(x, y, false, objRegion, type.getSizeX(), type.getSizeY(), type.getTiles());
-		world.addObject(obj);
-		/*
-		TextureAtlas atlas = assetManager.get("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
-		TextureRegion houseRegion = atlas.findRegion("small_house");
-		GridPoint2[] gridArray = new GridPoint2[5*4-1];
-		int index = 0;
-		for (int loopX = 0; loopX < 5; loopX++) {
-			for (int loopY = 0; loopY < 4; loopY++) {
-				if (loopX==3&&loopY==0) {
-					continue;
-				}
-				gridArray[index] = new GridPoint2(loopX, loopY);
-				index++;
-			}
-		}
-		WorldObject house = new WorldObject(x, y, false, houseRegion, 5f, 5f, gridArray);
-		world.addObject(house);
-		*/
-	}
-	
-	private void addGameWorldObject(AssetManager assetManager, String sx, String sy, GAMEWORLD_OBJ type) {
-		int x = Integer.parseInt(sx);
-		int y = Integer.parseInt(sy);
-		
-		TextureAtlas atlas = assetManager.get("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
-		TextureRegion objRegion = atlas.findRegion(type.getPath());
-		
-		WorldObject obj = new WorldObject(x, y, false, objRegion, type.getSizeX(), type.getSizeY(), type.getTiles());
-		world.addObject(obj);
+		WorldObject worldObj = new WorldObject(x, y, false, objRegion, obj.getSizeX(), obj.getSizeY(), obj.getTiles());
+		world.addObject(worldObj);
 	}
 	
 	private void teleport(String sx, String sy, String sterrain, String stargetWorld, String stargetX, String stargetY, String stargetDir, String stransitionColor) {
@@ -244,6 +210,7 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 	public Array<AssetDescriptor> getDependencies(String filename, FileHandle file, WorldParameter parameter) {
 		Array<AssetDescriptor> ad = new Array<AssetDescriptor>();
 		ad.add(new AssetDescriptor("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class));
+		ad.add(new AssetDescriptor("res/LWorldObjects.xml", LWorldObjectDb.class));
 		return ad;
 	}
 	

@@ -11,7 +11,6 @@ public class Main {
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
-		config.title = "Pokemon Game";
 		config.height = 400;
 		config.width = 600;
 		config.vSyncEnabled = false;
