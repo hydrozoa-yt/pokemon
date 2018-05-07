@@ -1,5 +1,8 @@
 package com.hydrozoa.pokemon.battle.moves;
 
+import java.lang.reflect.InvocationTargetException;
+
+import com.badlogic.gdx.Gdx;
 import com.hydrozoa.pokemon.battle.BATTLE_PARTY;
 import com.hydrozoa.pokemon.battle.BattleMechanics;
 import com.hydrozoa.pokemon.battle.STAT;
@@ -25,10 +28,11 @@ public class DamageMove extends Move {
 	@Override
 	public BattleAnimation animation() {
 		try {
-			return animationClass.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
+			return animationClass.getDeclaredConstructor().newInstance();
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException	| NoSuchMethodException | SecurityException e) {
+			System.err.println(animationClass.getName()+" does not seem to have a constructor");
 			e.printStackTrace();
-			System.exit(1);
+			Gdx.app.exit();
 		}
 		return null;
 	}

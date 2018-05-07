@@ -88,9 +88,9 @@ public class LWorldObjectLoader extends AsynchronousAssetLoader<LWorldObjectDb, 
 	}
 	
 	@Override
+	@SuppressWarnings("unchecked")
 	public Array<AssetDescriptor> getDependencies(String filename, FileHandle file, LWorldObjectDbParameter parameter) {
 		Array<AssetDescriptor> ad = new Array<AssetDescriptor>();
-		//ad.add(new AssetDescriptor("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class));
 		return ad;
 	}
 	

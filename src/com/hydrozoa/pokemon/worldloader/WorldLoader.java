@@ -3,7 +3,6 @@ package com.hydrozoa.pokemon.worldloader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
@@ -12,9 +11,9 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
 import com.hydrozoa.pokemon.model.DIRECTION;
@@ -207,6 +206,7 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public Array<AssetDescriptor> getDependencies(String filename, FileHandle file, WorldParameter parameter) {
 		Array<AssetDescriptor> ad = new Array<AssetDescriptor>();
 		ad.add(new AssetDescriptor("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class));
