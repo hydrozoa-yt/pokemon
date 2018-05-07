@@ -77,8 +77,6 @@ addFlowers		2	12
 addFlowers		3	13
 addFlowers		2	14
 addObj			4	14	SMALL_HOUSE
+teleport		7	14	NONE	test_map_indoor		3	0	NORTH	WHITE
 addDoor			7	14
 addObj			9	14	SIGN
-
-//teleport		13	10	NONE	test_map_indoor		3	0	NORTH	WHITE
-//addDoor			13	10
