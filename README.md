@@ -16,7 +16,7 @@ The two scripts mentioned above require "java" and "javac" to be available from 
 
 You can also use an IDE like Eclipse to do all this for you.
 
-##How to help
+## How to help
 * Add maps in res/worlds/ [Map format discussed here](https://github.com/hydrozoa-yt/pokemon/wiki/World-loading-format) 
 * Add image assets to the tileset in res/graphics_unpacked/tiles/
 * Add objects (addObj-command in map format) to help maps makers
