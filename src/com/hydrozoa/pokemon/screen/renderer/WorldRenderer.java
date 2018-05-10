@@ -25,8 +25,10 @@ public class WorldRenderer {
 	private AssetManager assetManager;
 	private World world;
 	
+	private TextureRegion grass;
 	private TextureRegion grass1;
 	private TextureRegion grass2;
+	private TextureRegion grass_dirtpatch;
 	private TextureRegion indoorTiles;
 	private TextureRegion indoorTilesShadow;
 	private TextureRegion wallBottom;
@@ -40,8 +42,10 @@ public class WorldRenderer {
 		this.world = world;;
 		
 		TextureAtlas atlas = assetManager.get("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
+		grass = atlas.findRegion("grass");
 		grass1 = atlas.findRegion("grass1");
 		grass2 = atlas.findRegion("grass2");
+		grass_dirtpatch = atlas.findRegion("grass_dirtpatch");
 		indoorTiles = atlas.findRegion("indoor_tiles");
 		indoorTilesShadow = atlas.findRegion("indoor_tiles_shadow");
 		wallBottom = atlas.findRegion("wall_bottom");
@@ -56,10 +60,14 @@ public class WorldRenderer {
 		for (int x = 0; x < world.getMap().getWidth(); x++) {
 			for (int y = 0; y < world.getMap().getHeight(); y++) {
 				TextureRegion render;
-				if (world.getMap().getTile(x, y).getTerrain() == TERRAIN.GRASS_1) {
+				if (world.getMap().getTile(x, y).getTerrain() == TERRAIN.GRASS) {
+					render = grass;
+				} else if (world.getMap().getTile(x, y).getTerrain() == TERRAIN.GRASS_1) {
 					render = grass1;
 				} else if (world.getMap().getTile(x, y).getTerrain() == TERRAIN.GRASS_2) {
 					render = grass2;
+				} else if (world.getMap().getTile(x, y).getTerrain() == TERRAIN.GRASS_DIRTPATCH) {
+					render = grass_dirtpatch;
 				} else if (world.getMap().getTile(x, y).getTerrain() == TERRAIN.INDOOR_TILES) {
 					render = indoorTiles;
 				} else if (world.getMap().getTile(x, y).getTerrain() == TERRAIN.INDOOR_TILES_SHADOW) {

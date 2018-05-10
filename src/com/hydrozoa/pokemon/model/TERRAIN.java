@@ -6,8 +6,10 @@ package com.hydrozoa.pokemon.model;
 public enum TERRAIN {
 	
 	NONE,
+	GRASS,
 	GRASS_1,
 	GRASS_2,
+	GRASS_DIRTPATCH,
 	INDOOR_TILES,
 	INDOOR_TILES_SHADOW,
 	WALL_BOTTOM,

@@ -1,10 +1,10 @@
-test_map		24	22				4	2
+pallet_town		24	22				7	13
 
-fillTerrain				GRASS_1
+fillTerrain				GRASS
 
-setTerrain		0	0	GRASS_2
-setTerrain		1	0	GRASS_2
-setTerrain		2	0	GRASS_2
+setTerrain		7	13	GRASS_DIRTPATCH
+setTerrain		9	5	GRASS_DIRTPATCH
+setTerrain		16	13	GRASS_DIRTPATCH
 
 addTree			0	0
 addTree			2	2
@@ -80,3 +80,14 @@ addObj			4	14	SMALL_HOUSE
 teleport		7	14	NONE	test_map_indoor		3	0	NORTH	WHITE
 addDoor			7	14
 addObj			9	14	SIGN
+
+addObj			14	14	SIGN
+addObj			15	14	SMALL_HOUSE_MIRROR
+addDoor			16	14
+
+addObj			17	9	SIGN
+addFlowers		18	12
+addFlowers		20	12
+addFlowers		20	14
+addFlowers		21	15
+addFlowers		21	13

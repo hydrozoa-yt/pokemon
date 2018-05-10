@@ -19,6 +19,26 @@
 			<tile x="4" y="2" />
 		</tiles>
 	</obj>
+	<obj name="SMALL_HOUSE_MIRROR">
+		<imageName>small_house_mirror</imageName>
+		<size x="5f" y="5f" />
+		<tiles>
+			<tile x="0" y="0" />
+			<tile x="1" y="0" />
+			<tile x="3" y="0" />
+			<tile x="4" y="0" />
+			<tile x="0" y="1" />
+			<tile x="1" y="1" />
+			<tile x="2" y="1" />
+			<tile x="3" y="1" />
+			<tile x="4" y="1" />
+			<tile x="0" y="2" />
+			<tile x="1" y="2" />
+			<tile x="2" y="2" />
+			<tile x="3" y="2" />
+			<tile x="4" y="2" />
+		</tiles>
+	</obj>
 	<obj name="LABORATORY">
 		<imageName>laboratory</imageName>
 		<size x="7f" y="5f" />
