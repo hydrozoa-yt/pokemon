@@ -43,4 +43,4 @@ unwalkable		6	0
 
 addRug			2	0
 
-teleport		3	0	NONE	pallet_town	7	14	SOUTH	BLACK
+teleport		3	0	NONE	littleroot_town	7	14	SOUTH	BLACK

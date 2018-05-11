@@ -1,4 +1,4 @@
-pallet_town		24	22				7	13
+littleroot_town		24	22				7	13
 
 fillTerrain				GRASS
 

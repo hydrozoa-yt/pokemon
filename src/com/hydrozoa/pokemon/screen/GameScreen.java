@@ -98,7 +98,7 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer {
 		for (World w : loadedWorlds) {
 			worlds.put(w.getName(), w);
 		}
-		world = worlds.get("pallet_town");
+		world = worlds.get("littleroot_town");
 		
 		camera = new Camera();
 		player = new PlayerActor(world, world.getSafeX(), world.getSafeY(), animations, this);
