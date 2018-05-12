@@ -127,6 +127,7 @@ public class PokemonGame extends Game {
 		File[] directoryListing = dir.listFiles();
 		if (directoryListing != null) {
 			for (File child : directoryListing) {
+				System.out.println("Loading world "+child.getPath());
 				assetManager.load(child.getPath(), World.class);
 		    }
 		}

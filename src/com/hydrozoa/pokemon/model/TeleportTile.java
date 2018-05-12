@@ -48,7 +48,7 @@ public class TeleportTile extends Tile {
 			PlayerActor playerActor = (PlayerActor) a; 
 			CutscenePlayer cutscenes = playerActor.getCutscenePlayer(); 
 			
-			if (this.getObject() != null) {
+			if (this.getObject() != null) { // the teleport tile has an object
 				if (this.getObject() instanceof Door) { // entering af door
 					//System.out.println("GONNA STEP ON A DOOR");
 					Door door = (Door)this.getObject();
@@ -61,15 +61,15 @@ public class TeleportTile extends Tile {
 					cutscenes.queueEvent(new ActorWalkEvent(a, DIRECTION.NORTH));
 					return false;
 				}
-			} else { // anything / exiting a house
-				//System.out.println("exiting house");
+			} else { // // the teleport tile does not have an object
+				System.out.println("Initiating teleport to "+worldName);
+				
 				World nextWorld = cutscenes.getWorld(worldName);
-				if (nextWorld.getMap().getTile(x, y).getObject() != null) {
-					//System.out.println("exiting unto something");
+				
+				if (nextWorld.getMap().getTile(x, y).getObject() != null) { // the target tile has an object
 					WorldObject targetObj = nextWorld.getMap().getTile(x, y).getObject();
-					//System.out.println("Exiting unto a "+targetObj.getClass().getName());
+					//System.out.println("Teleporting onto a "+targetObj.getClass().getName());
 					if (targetObj instanceof Door) {
-						System.out.println("exiting by door");
 						Door targetDoor = (Door) targetObj;
 						cutscenes.queueEvent(new ActorWalkEvent(a, DIRECTION.SOUTH));
 						cutscenes.queueEvent(new ActorVisibilityEvent(a, true));
@@ -82,7 +82,12 @@ public class TeleportTile extends Tile {
 						cutscenes.queueEvent(new DoorEvent(targetDoor, false));
 						return false;
 					}
-					
+				} else { // the target tile does not have an object
+					cutscenes.queueEvent(new ActorWalkEvent(a, DIRECTION.NORTH));
+					cutscenes.queueEvent(new ActorVisibilityEvent(a, true));
+					cutscenes.queueEvent(new ChangeWorldEvent(worldName, x, y, facing, color));
+					cutscenes.queueEvent(new ActorVisibilityEvent(a, false));
+					return false;
 				}
 			}
 		}

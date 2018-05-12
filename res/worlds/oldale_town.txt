@@ -1,0 +1,92 @@
+oldale_town		22	24		0	0
+fillTerrain				GRASS
+
+addObj	0	0	BIG_TREE
+addObj	2	0	BIG_TREE
+addObj	0	2	BIG_TREE
+addObj	2	2	BIG_TREE
+addObj	0	4	BIG_TREE
+addObj	2	4	BIG_TREE
+addObj	0	6	BIG_TREE
+addObj	0	8	BIG_TREE
+addObj	0	12	BIG_TREE
+addObj	0	14	BIG_TREE
+addObj	0	16	BIG_TREE
+addObj	0	18	BIG_TREE
+addObj	2	18	BIG_TREE
+
+addObj	0	20	BIG_TREE
+addObj	2	20	BIG_TREE
+addObj	4	20	BIG_TREE
+addObj	6	20	BIG_TREE
+
+addObj	0	22	BIG_TREE
+addObj	2	22	BIG_TREE
+addObj	4	22	BIG_TREE
+addObj	6	22	BIG_TREE
+
+
+addObj	12	22	BIG_TREE
+addObj	14	22	BIG_TREE
+addObj	16	22	BIG_TREE
+addObj	18	22	BIG_TREE
+addObj	20	22	BIG_TREE
+addObj	12	20	BIG_TREE
+addObj	14	20	BIG_TREE
+addObj	16	20	BIG_TREE
+addObj	18	20	BIG_TREE
+addObj	18	18	BIG_TREE
+addObj	18	16	BIG_TREE
+addObj	18	14	BIG_TREE
+addObj	16	18	BIG_TREE
+addObj	20	20	BIG_TREE
+
+addObj	20	18	BIG_TREE
+addObj	20	16	BIG_TREE
+addObj	20	14	BIG_TREE
+addObj	20	12	BIG_TREE
+addObj	20	10	BIG_TREE
+addObj	20	8	BIG_TREE
+addObj	20	6	BIG_TREE
+addObj	20	4	BIG_TREE
+addObj	20	2	BIG_TREE
+addObj	20	0	BIG_TREE
+
+addObj	18	2	BIG_TREE
+addObj	18	4	BIG_TREE
+addObj	18	6	BIG_TREE
+addObj	18	8	BIG_TREE
+addObj	16	2	BIG_TREE
+
+addObj	18	0	BIG_TREE
+addObj	16	0	BIG_TREE
+addObj	14	0	BIG_TREE
+addObj	12	0	BIG_TREE
+
+
+addObj	4	0	BIG_TREE
+addObj	6	0	BIG_TREE
+
+addFlowers	2	13
+addFlowers	3	14
+addFlowers	2	15
+addFlowers	3	16
+
+addObj	4	14	OLDALE_HOUSE
+addDoor	5	14
+
+addObj	14	5	OLDALE_HOUSE
+addDoor	15	5
+
+addFlowers		9	12
+addFlowers		10	11
+addFlowers		11	13
+addObj		11	12	SIGN	
+
+// placement of pokecenter
+addObj	5	5	OLDALE_HOUSE
+addDoor	6	5
+
+// placement of pokemart
+addObj	13	15	OLDALE_HOUSE
+addDoor	14	15

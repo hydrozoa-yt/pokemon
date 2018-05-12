@@ -91,3 +91,7 @@ addFlowers		20	12
 addFlowers		20	14
 addFlowers		21	15
 addFlowers		21	13
+
+
+teleport		12	21	GRASS	oldale_town		9	0	NORTH	WHITE
+teleport		13	21	GRASS	oldale_town		9	0	NORTH	WHITE

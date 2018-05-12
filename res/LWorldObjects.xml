@@ -1,4 +1,21 @@
 <LWorldObjects>
+	<obj name="OLDALE_HOUSE">
+		<imageName>oldale_house</imageName>
+		<size x="4f" y="4f" />
+		<tiles>
+			<tile x="0" y="0" />
+			<tile x="2" y="0" />
+			<tile x="3" y="0" />
+			<tile x="0" y="1" />
+			<tile x="1" y="1" />
+			<tile x="2" y="1" />
+			<tile x="3" y="1" />
+			<tile x="0" y="2" />
+			<tile x="1" y="2" />
+			<tile x="2" y="2" />
+			<tile x="3" y="2" />
+		</tiles>
+	</obj>
 	<obj name="SMALL_HOUSE">
 		<imageName>small_house</imageName>
 		<size x="5f" y="5f" />

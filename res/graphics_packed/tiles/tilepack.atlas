@@ -20,98 +20,98 @@ brendan_walk_east
   index: 1
 brendan_stand_north
   rotate: false
-  xy: 280, 60
+  xy: 380, 102
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: -1
 brendan_walk_north
   rotate: false
-  xy: 280, 60
+  xy: 380, 102
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 1
 brendan_stand_south
   rotate: false
-  xy: 314, 102
+  xy: 70, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: -1
 brendan_walk_south
   rotate: false
-  xy: 314, 102
+  xy: 70, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 1
 brendan_stand_west
   rotate: false
-  xy: 70, 20
+  xy: 398, 102
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: -1
 brendan_walk_west
   rotate: false
-  xy: 70, 20
+  xy: 398, 102
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 1
 brendan_walk_east
   rotate: false
-  xy: 332, 102
+  xy: 88, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 0
 brendan_walk_east
   rotate: false
-  xy: 88, 20
+  xy: 416, 102
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 2
-brendan_walk_north
-  rotate: false
-  xy: 350, 102
-  size: 16, 24
-  orig: 16, 24
-  offset: 0, 0
-  index: 0
 brendan_walk_north
   rotate: false
   xy: 106, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
-  index: 2
-brendan_walk_south
+  index: 0
+brendan_walk_north
   rotate: false
-  xy: 368, 102
+  xy: 434, 102
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
-  index: 0
+  index: 2
 brendan_walk_south
   rotate: false
   xy: 124, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
+  index: 0
+brendan_walk_south
+  rotate: false
+  xy: 452, 102
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
   index: 2
 brendan_walk_west
   rotate: false
-  xy: 386, 102
+  xy: 142, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 0
 brendan_walk_west
   rotate: false
-  xy: 142, 20
+  xy: 470, 102
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
@@ -174,77 +174,77 @@ brown_path_grass_southwest
   index: -1
 brown_path_grass_west
   rotate: false
-  xy: 196, 28
+  xy: 196, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 flowers
   rotate: false
-  xy: 458, 110
+  xy: 214, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 0
 flowers
   rotate: false
-  xy: 196, 10
+  xy: 232, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 1
 flowers
   rotate: false
-  xy: 214, 28
+  xy: 346, 68
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 2
 grass
   rotate: false
-  xy: 476, 110
+  xy: 250, 28
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 grass1
   rotate: false
-  xy: 494, 110
+  xy: 250, 10
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 grass2
   rotate: false
-  xy: 214, 10
+  xy: 280, 44
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 grass_dirtpatch
   rotate: false
-  xy: 232, 28
+  xy: 298, 44
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 indoor_tiles
   rotate: false
-  xy: 232, 10
+  xy: 316, 44
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 indoor_tiles_shadow
   rotate: false
-  xy: 250, 28
+  xy: 380, 84
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 labDoor
   rotate: false
-  xy: 404, 102
+  xy: 160, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
@@ -258,11 +258,25 @@ laboratory
   index: -1
 large_tree
   rotate: false
-  xy: 280, 86
+  xy: 346, 86
   size: 32, 40
   orig: 32, 40
   offset: 0, 0
   index: -1
+oldale_house
+  rotate: false
+  xy: 280, 62
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+redDoor
+  rotate: false
+  xy: 488, 102
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
 rug
   rotate: false
   xy: 2, 13
@@ -272,7 +286,7 @@ rug
   index: -1
 sign
   rotate: false
-  xy: 250, 10
+  xy: 398, 84
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -293,42 +307,42 @@ small_house_mirror
   index: -1
 wall_bottom
   rotate: false
-  xy: 298, 68
+  xy: 416, 84
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_top
   rotate: false
-  xy: 280, 42
+  xy: 434, 84
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 woodenDoor
   rotate: false
-  xy: 160, 20
+  xy: 178, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 0
 woodenDoor
   rotate: false
-  xy: 422, 102
+  xy: 196, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 1
 woodenDoor
   rotate: false
-  xy: 178, 20
+  xy: 214, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 2
 woodenDoor
   rotate: false
-  xy: 440, 102
+  xy: 232, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
