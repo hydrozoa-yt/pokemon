@@ -1,0 +1,51 @@
+<LTerrain>
+	<terrain name="NONE">
+		<imageName></imageName>
+	</terrain>
+	<terrain name="GRASS">
+		<imageName>grass</imageName>
+	</terrain>
+	<terrain name="GRASS_DIRTPATCH">
+		<imageName>grass_dirtpatch</imageName>
+	</terrain>
+	<terrain name="INDOOR_TILES">
+		<imageName>indoor_tiles</imageName>
+	</terrain>
+	<terrain name="INDOOR_TILES_SHADOW">
+		<imageName>indoor_tiles_shadow</imageName>
+	</terrain>
+	<terrain name="WALL_BOTTOM">
+		<imageName>wall_bottom</imageName>
+	</terrain>
+	<terrain name="WALL_TOP">
+		<imageName>wall_top</imageName>
+	</terrain>
+	
+	<terrain name="BROWN_PATH">
+		<imageName>brown_path</imageName>
+	</terrain>
+	<terrain name="BROWN_PATH_GRASS_NORTH">
+		<imageName>brown_path_grass_north</imageName>
+	</terrain>
+	<terrain name="BROWN_PATH_GRASS_EAST">
+		<imageName>brown_path_grass_east</imageName>
+	</terrain>
+	<terrain name="BROWN_PATH_GRASS_SOUTH">
+		<imageName>brown_path_grass_south</imageName>
+	</terrain>
+	<terrain name="BROWN_PATH_GRASS_WEST">
+		<imageName>brown_path_grass_west</imageName>
+	</terrain>
+	<terrain name="BROWN_PATH_GRASS_NORTHEAST">
+		<imageName>brown_path_grass_northeast</imageName>
+	</terrain>
+	<terrain name="BROWN_PATH_GRASS_NORTHWEST">
+		<imageName>brown_path_grass_northwest</imageName>
+	</terrain>
+	<terrain name="BROWN_PATH_GRASS_SOUTHEAST">
+		<imageName>brown_path_grass_southeast</imageName>
+	</terrain>
+	<terrain name="BROWN_PATH_GRASS_SOUTHWEST">
+		<imageName>brown_path_grass_southwest</imageName>
+	</terrain>
+</LTerrain>

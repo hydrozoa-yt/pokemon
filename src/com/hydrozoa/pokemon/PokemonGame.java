@@ -28,6 +28,8 @@ import com.hydrozoa.pokemon.screen.transition.BattleBlinkTransition;
 import com.hydrozoa.pokemon.screen.transition.BattleBlinkTransitionAccessor;
 import com.hydrozoa.pokemon.screen.transition.Transition;
 import com.hydrozoa.pokemon.util.SkinGenerator;
+import com.hydrozoa.pokemon.worldloader.LTerrainDb;
+import com.hydrozoa.pokemon.worldloader.LTerrainLoader;
 import com.hydrozoa.pokemon.worldloader.LWorldObjectDb;
 import com.hydrozoa.pokemon.worldloader.LWorldObjectLoader;
 import com.hydrozoa.pokemon.worldloader.WorldLoader;
@@ -99,8 +101,10 @@ public class PokemonGame extends Game {
 		 */
 		assetManager = new AssetManager();
 		assetManager.setLoader(LWorldObjectDb.class, new LWorldObjectLoader(new InternalFileHandleResolver()));
+		assetManager.setLoader(LTerrainDb.class, new LTerrainLoader(new InternalFileHandleResolver()));
 		assetManager.setLoader(World.class, new WorldLoader(new InternalFileHandleResolver()));
 		
+		assetManager.load("res/LTerrain.xml", LTerrainDb.class);
 		assetManager.load("res/LWorldObjects.xml", LWorldObjectDb.class);
 		
 		assetManager.load("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);

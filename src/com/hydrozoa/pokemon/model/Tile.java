@@ -2,23 +2,24 @@ package com.hydrozoa.pokemon.model;
 
 import com.hydrozoa.pokemon.model.actor.Actor;
 import com.hydrozoa.pokemon.model.world.WorldObject;
+import com.hydrozoa.pokemon.worldloader.LTerrain;
 
 /**
  * @author hydrozoa
  */
 public class Tile {
 	
-	private TERRAIN terrain;
+	private LTerrain terrain;
 	private WorldObject object;
 	private Actor actor;
 	
 	private boolean walkable = true;
 
-	public Tile(TERRAIN terrain) {
+	public Tile(LTerrain terrain) {
 		this.terrain = terrain;
 	}
 	
-	public void setTerrain(TERRAIN terrain) {
+	public void setTerrain(LTerrain terrain) {
 		this.terrain = terrain;
 	}
 	
@@ -26,7 +27,7 @@ public class Tile {
 		this.walkable = walkable;
 	}
 
-	public TERRAIN getTerrain() {
+	public LTerrain getTerrain() {
 		return terrain;
 	}
 

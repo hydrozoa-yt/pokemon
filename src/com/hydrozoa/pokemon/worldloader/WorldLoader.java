@@ -17,8 +17,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
 import com.hydrozoa.pokemon.model.DIRECTION;
-import com.hydrozoa.pokemon.model.TERRAIN;
 import com.hydrozoa.pokemon.model.TeleportTile;
+import com.hydrozoa.pokemon.model.Tile;
 import com.hydrozoa.pokemon.model.world.Door;
 import com.hydrozoa.pokemon.model.world.World;
 import com.hydrozoa.pokemon.model.world.WorldObject;
@@ -70,10 +70,10 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 				String[] tokens = line.split("\\s+");
 				switch (tokens[0]) {
 				case "fillTerrain":
-					fillTerrain(tokens[1]);
+					fillTerrain(asman, tokens[1]);
 					break;
 				case "setTerrain":
-					setTerrain(tokens[1], tokens[2], tokens[3]);
+					setTerrain(asman, tokens[1], tokens[2], tokens[3]);
 					break;
 				case "addFlowers":
 					addFlowers(tokens[1], tokens[2]);
@@ -91,7 +91,7 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 					addDoor(tokens[1], tokens[2]);
 					break;
 				case "teleport":
-					teleport(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5], tokens[6], tokens[7], tokens[8]);
+					teleport(asman, tokens[1], tokens[2], tokens[3], tokens[4], tokens[5], tokens[6], tokens[7], tokens[8]);
 					break;
 				case "unwalkable":
 					unwalkable(tokens[1], tokens[2]);
@@ -103,19 +103,23 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 		}
 	}
 
-	private void fillTerrain(String terrain) {
-		TERRAIN t = TERRAIN.valueOf(terrain);
+	private void fillTerrain(AssetManager asman, String terrain) {
+		LTerrainDb terrainDb = asman.get("res/LTerrain.xml", LTerrainDb.class);
+		LTerrain t = terrainDb.getLTerrain(terrain);
+
 		for (int x = 0; x < world.getMap().getWidth(); x++) {
 			for (int y = 0; y < world.getMap().getHeight(); y++) {
-				world.getMap().getTile(x, y).setTerrain(t);
+				world.getMap().setTile(new Tile(t), x, y);
 			}
 		}
 	}
 	
-	private void setTerrain(String x, String y, String terrain) {
+	private void setTerrain(AssetManager asman, String x, String y, String terrain) {
+		LTerrainDb terrainDb = asman.get("res/LTerrain.xml", LTerrainDb.class);
+		LTerrain t = terrainDb.getLTerrain(terrain);
+		
 		int ix = Integer.parseInt(x);
 		int iy = Integer.parseInt(y);
-		TERRAIN t = TERRAIN.valueOf(terrain);
 		world.getMap().getTile(ix, iy).setTerrain(t);
 	}
 	
@@ -160,14 +164,16 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 		world.addObject(worldObj);
 	}
 	
-	private void teleport(String sx, String sy, String sterrain, String stargetWorld, String stargetX, String stargetY, String stargetDir, String stransitionColor) {
+	private void teleport(AssetManager asman, String sx, String sy, String sterrain, String stargetWorld, String stargetX, String stargetY, String stargetDir, String stransitionColor) {
 		int x = Integer.parseInt(sx);
 		int y = Integer.parseInt(sy);
 		
 		int targetX = Integer.parseInt(stargetX);
 		int targetY = Integer.parseInt(stargetY);
 		
-		TERRAIN terrain = TERRAIN.valueOf(sterrain);
+		LTerrainDb terrainDb = asman.get("res/LTerrain.xml", LTerrainDb.class);
+		LTerrain t = terrainDb.getLTerrain(sterrain);
+		
 		DIRECTION targetDir = DIRECTION.valueOf(stargetDir);
 		
 		Color transitionColor;
@@ -183,7 +189,7 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 			break;
 		}
 		
-		TeleportTile tile = new TeleportTile(terrain, stargetWorld, targetX, targetY, targetDir, transitionColor);
+		TeleportTile tile = new TeleportTile(t, stargetWorld, targetX, targetY, targetDir, transitionColor);
 		world.getMap().setTile(tile, x, y);
 	}
 	
@@ -211,6 +217,7 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 		Array<AssetDescriptor> ad = new Array<AssetDescriptor>();
 		ad.add(new AssetDescriptor("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class));
 		ad.add(new AssetDescriptor("res/LWorldObjects.xml", LWorldObjectDb.class));
+		ad.add(new AssetDescriptor("res/LTerrain.xml", LTerrainDb.class));
 		return ad;
 	}
 	

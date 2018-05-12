@@ -12,6 +12,7 @@ import com.hydrozoa.pokemon.model.world.cutscene.ChangeWorldEvent;
 import com.hydrozoa.pokemon.model.world.cutscene.CutscenePlayer;
 import com.hydrozoa.pokemon.model.world.cutscene.DoorEvent;
 import com.hydrozoa.pokemon.model.world.cutscene.WaitEvent;
+import com.hydrozoa.pokemon.worldloader.LTerrain;
 
 /**
  * @author hydrozoa
@@ -26,7 +27,7 @@ public class TeleportTile extends Tile {
 	/* transition color */
 	private Color color;
 
-	public TeleportTile(TERRAIN terrain, String worldName, int x, int y, DIRECTION facing, Color color) {
+	public TeleportTile(LTerrain terrain, String worldName, int x, int y, DIRECTION facing, Color color) {
 		super(terrain);
 		this.worldName = worldName;
 		this.x= x;

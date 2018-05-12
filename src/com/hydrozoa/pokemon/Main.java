@@ -1,5 +1,6 @@
 package com.hydrozoa.pokemon;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -15,6 +16,7 @@ public class Main {
 		config.width = 600;
 		config.vSyncEnabled = false;
 		config.foregroundFPS = 200;
+		config.addIcon("res/graphics/pokeball_icon.png", Files.FileType.Local);
 		
 		new LwjglApplication(new PokemonGame(), config);
 	}
