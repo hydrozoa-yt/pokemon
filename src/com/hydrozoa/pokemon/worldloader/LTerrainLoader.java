@@ -51,7 +51,12 @@ public class LTerrainLoader extends AsynchronousAssetLoader<LTerrainDb, LTerrain
 				System.err.println("Found " + imageName.getName() +"-element where expected imageName-element in "+filename);
 				Gdx.app.exit();
 			}
-			String imageNameString = imageName.getText();
+			String imageNameString;
+			if (imageName.getText() != null) {
+				imageNameString = imageName.getText();
+			} else {
+				imageNameString = "";
+			}
 			
 			LTerrain justLoaded = new LTerrain(imageNameString);
 			terrainDb.addTerrain(name, justLoaded);
