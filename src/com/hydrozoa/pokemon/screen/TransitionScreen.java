@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hydrozoa.pokemon.PokemonGame;
-import com.hydrozoa.pokemon.screen.transition.Action;
 import com.hydrozoa.pokemon.screen.transition.Transition;
+import com.hydrozoa.pokemon.util.Action;
 
 /**
  * Used for transitions between screens.

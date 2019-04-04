@@ -21,7 +21,7 @@ public class World implements ActorObserver {
 	
 	/** Unique name used to refer to this world */
 	private String name;
-	private int safeX;
+	private int safeX;		// fly destination
 	private int safeY;
 	
 	private TileMap map;

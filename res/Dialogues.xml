@@ -1,0 +1,9 @@
+<Dialogues>
+	<dialogue name="test">
+		<linear id="0" text="This is a test dialogue.">
+			<pointer target="1" />
+		</linear>
+		<linear id="1" text="Thank you for participating.">
+		</linear>
+	</dialogue>
+</Dialogues>

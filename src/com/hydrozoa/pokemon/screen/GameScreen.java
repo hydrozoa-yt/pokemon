@@ -22,6 +22,7 @@ import com.hydrozoa.pokemon.PokemonGame;
 import com.hydrozoa.pokemon.controller.ActorMovementController;
 import com.hydrozoa.pokemon.controller.DialogueController;
 import com.hydrozoa.pokemon.controller.InteractionController;
+import com.hydrozoa.pokemon.controller.OptionBoxController;
 import com.hydrozoa.pokemon.dialogue.Dialogue;
 import com.hydrozoa.pokemon.model.Camera;
 import com.hydrozoa.pokemon.model.DIRECTION;
@@ -33,11 +34,11 @@ import com.hydrozoa.pokemon.model.world.cutscene.CutscenePlayer;
 import com.hydrozoa.pokemon.screen.renderer.EventQueueRenderer;
 import com.hydrozoa.pokemon.screen.renderer.TileInfoRenderer;
 import com.hydrozoa.pokemon.screen.renderer.WorldRenderer;
-import com.hydrozoa.pokemon.screen.transition.Action;
 import com.hydrozoa.pokemon.screen.transition.FadeInTransition;
 import com.hydrozoa.pokemon.screen.transition.FadeOutTransition;
 import com.hydrozoa.pokemon.ui.DialogueBox;
 import com.hydrozoa.pokemon.ui.OptionBox;
+import com.hydrozoa.pokemon.util.Action;
 import com.hydrozoa.pokemon.util.AnimationSet;
 
 /**
@@ -49,6 +50,7 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer {
 	private DialogueController dialogueController;
 	private ActorMovementController playerController;
 	private InteractionController interactionController;
+	private OptionBoxController debugController;
 	
 	private HashMap<String, World> worlds = new HashMap<String, World>();
 	private World world;
@@ -72,9 +74,11 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer {
 	private int uiScale = 2;
 	
 	private Stage uiStage;
-	private Table root;
+	private Table dialogRoot;	// root table used for dialogues
+	private Table menuRoot;		// root table used for menus (i.e. debug menu)
 	private DialogueBox dialogueBox;
 	private OptionBox optionsBox;
+	private OptionBox debugBox;
 
 	public GameScreen(PokemonGame app) {
 		super(app);
@@ -121,9 +125,18 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer {
 		playerController = new ActorMovementController(player);
 		dialogueController = new DialogueController(dialogueBox, optionsBox);
 		interactionController = new InteractionController(player, dialogueController);
-		multiplexer.addProcessor(0, dialogueController);
-		multiplexer.addProcessor(1, playerController);
-		multiplexer.addProcessor(2, interactionController);
+		debugController = new OptionBoxController(debugBox);
+		debugController.addAction(new Action() {
+			@Override
+			public void action() {
+				renderTileInfo = !renderTileInfo;
+			}
+		}, "Toggle show coords");
+		
+		multiplexer.addProcessor(0, debugController);
+		multiplexer.addProcessor(1, dialogueController);
+		multiplexer.addProcessor(2, playerController);
+		multiplexer.addProcessor(3, interactionController);
 		
 		worldRenderer = new WorldRenderer(getApp().getAssetManager(), world);
 		queueRenderer = new EventQueueRenderer(app.getSkin(), eventQueue);
@@ -147,10 +160,6 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer {
 	
 	@Override
 	public void update(float delta) {
-		if (Gdx.input.isKeyJustPressed(Keys.F12)) {
-			renderTileInfo = !renderTileInfo;
-		}
-		
 		while (currentEvent == null || currentEvent.isFinished()) { // no active event
 			if (eventQueue.peek() == null) { // no event queued up
 				currentEvent = null;
@@ -215,11 +224,14 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer {
 	private void initUI() {
 		uiStage = new Stage(new ScreenViewport());
 		uiStage.getViewport().update(Gdx.graphics.getWidth()/uiScale, Gdx.graphics.getHeight()/uiScale, true);
-		//uiStage.setDebugAll(true);
+		//uiStage.setDebugAll(true);		// Uncomment to debug UI
 		
-		root = new Table();
-		root.setFillParent(true);
-		uiStage.addActor(root);
+		/*
+		 * DIALOGUE SETUP
+		 */
+		dialogRoot = new Table();
+		dialogRoot.setFillParent(true);
+		uiStage.addActor(dialogRoot);
 		
 		dialogueBox = new DialogueBox(getApp().getSkin());
 		dialogueBox.setVisible(false);
@@ -240,7 +252,22 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer {
 						.row();
 		
 		
-		root.add(dialogTable).expand().align(Align.bottom);
+		dialogRoot.add(dialogTable).expand().align(Align.bottom);
+		
+		/*
+		 * MENU SETUP
+		 */
+		menuRoot = new Table();
+		menuRoot.setFillParent(true);
+		uiStage.addActor(menuRoot);
+		
+		debugBox = new OptionBox(getApp().getSkin());
+		debugBox.setVisible(false);
+		
+		Table menuTable = new Table();
+		menuTable.add(debugBox).expand().align(Align.top | Align.left);
+		
+		menuRoot.add(menuTable).expand().fill();
 	}
 	
 	public void changeWorld(World newWorld, int x, int y, DIRECTION face) {

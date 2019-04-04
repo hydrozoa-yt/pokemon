@@ -150,6 +150,14 @@ public class WorldLoader extends AsynchronousAssetLoader<World, WorldLoader.Worl
 		world.addObject(rug);
 	}
 	
+	/**
+	 * Adds a non-walkable game object to the World.
+	 * 
+	 * @param assetManager
+	 * @param sx
+	 * @param sy
+	 * @param stype
+	 */
 	private void addGameWorldObject(AssetManager assetManager, String sx, String sy, String stype) {
 		int x = Integer.parseInt(sx);
 		int y = Integer.parseInt(sy);

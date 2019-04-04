@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;;
 
 /**
+ * UI Element that is a box with alist inside it. Each line can be selected with an arrow.
+ * 
  * @author hydrozoa
  */
 public class OptionBox extends Table {
@@ -88,5 +90,11 @@ public class OptionBox extends Table {
 	public int getIndex() {
 		return selectorIndex;
 	}
-
+	
+	/**
+	 * @return	Number of options added to this OptionBox
+	 */
+	public int getAmount() {
+		return options.size();
+	}
 }

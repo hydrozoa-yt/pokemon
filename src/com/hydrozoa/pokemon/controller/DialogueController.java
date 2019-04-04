@@ -11,6 +11,8 @@ import com.hydrozoa.pokemon.ui.DialogueBox;
 import com.hydrozoa.pokemon.ui.OptionBox;
 
 /**
+ * Controller for the game's dialogue system.
+ * 
  * @author hydrozoa
  */
 public class DialogueController extends InputAdapter {
