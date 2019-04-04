@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.hydrozoa.pokemon.model.DIRECTION;
 import com.hydrozoa.pokemon.model.actor.Actor;
+import com.hydrozoa.pokemon.model.actor.Actor.MOVEMENT_MODE;
 
 /**
  * Controller that can move an Actor around.
@@ -52,6 +53,14 @@ public class ActorMovementController extends InputAdapter {
 	
 	@Override
 	public boolean keyUp(int keycode) {
+		if (keycode == Keys.F1) {
+			if (player.getMovementMode() == MOVEMENT_MODE.WALKING) {
+				player.setMode(MOVEMENT_MODE.BIKING);
+			} else {
+				player.setMode(MOVEMENT_MODE.WALKING);
+			}
+		}
+		
 		if (keycode == Keys.UP) {
 			releaseDirection(DIRECTION.NORTH);
 		}

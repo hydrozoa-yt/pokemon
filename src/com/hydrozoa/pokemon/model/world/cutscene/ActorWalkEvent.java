@@ -2,7 +2,7 @@ package com.hydrozoa.pokemon.model.world.cutscene;
 
 import com.hydrozoa.pokemon.model.DIRECTION;
 import com.hydrozoa.pokemon.model.actor.Actor;
-import com.hydrozoa.pokemon.model.actor.Actor.ACTOR_STATE;
+import com.hydrozoa.pokemon.model.actor.Actor.MOVEMENT_STATE;
 
 /**
  * @author hydrozoa
@@ -31,11 +31,11 @@ public class ActorWalkEvent extends CutsceneEvent {
 	@Override
 	public void update(float delta) {
 		if (a.getX() != targetX || a.getY() != targetY) {
-			if (a.getState() == ACTOR_STATE.STANDING) {
+			if (a.getMovementState() == MOVEMENT_STATE.STILL) {
 				a.moveWithoutNotifications(dir);
 			}
 		} else {
-			if (a.getState() == ACTOR_STATE.STANDING) {
+			if (a.getMovementState() == MOVEMENT_STATE.STILL) {
 				finished = true;
 			}
 		}

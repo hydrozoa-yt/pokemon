@@ -4,7 +4,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.hydrozoa.pokemon.model.DIRECTION;
-import com.hydrozoa.pokemon.model.actor.Actor.ACTOR_STATE;
+import com.hydrozoa.pokemon.model.actor.Actor.MOVEMENT_STATE;
 
 /**
  * Behavior that will make an Actor walk around it's initial position randomly. 
@@ -39,7 +39,7 @@ public class LimitedWalkingBehavior extends ActorBehavior {
 
 	@Override
 	public void update(float delta) {
-		if (getActor().getState() != ACTOR_STATE.STANDING) {
+		if (getActor().getMovementState() != MOVEMENT_STATE.STILL) {
 			return;
 		}
 		timer += delta;

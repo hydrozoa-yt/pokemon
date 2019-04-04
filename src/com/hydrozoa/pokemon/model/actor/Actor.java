@@ -30,13 +30,15 @@ public class Actor implements YSortable {
 	private int destX, destY;
 	private float animTimer;
 	private float WALK_TIME_PER_TILE = 0.3f;
+	private float BIKE_TIME_PER_TILE = 0.1f;
 	private float REFACE_TIME = 0.1f;
 	private boolean noMoveNotifications = false;
 	
-	private float walkTimer;
+	private float moveTimer;
 	private boolean moveRequestThisFrame;
 	
-	private ACTOR_STATE state;
+	private MOVEMENT_STATE state;		// if the Actor is currently moving, standing or refacing
+	private MOVEMENT_MODE mode;			// if Actor is running or walking etc
 	
 	private AnimationSet animations;
 	
@@ -50,55 +52,69 @@ public class Actor implements YSortable {
 		this.worldX = x;
 		this.worldY = y;
 		this.animations = animations;
-		this.state = ACTOR_STATE.STANDING;
+		this.mode = MOVEMENT_MODE.WALKING;
+		this.state = MOVEMENT_STATE.STILL;
 		this.facing = DIRECTION.SOUTH;
 	}
 	
-	public enum ACTOR_STATE {
-		WALKING,
-		STANDING,
+	public enum MOVEMENT_STATE {
+		MOVING,
+		STILL,
 		REFACING,
 		;
 	}
 	
+	public enum MOVEMENT_MODE {
+		WALKING,
+		BIKING,
+		RUNNING,
+		;
+	}
+	
 	public void update(float delta) {
-		if (state == ACTOR_STATE.WALKING) {
+		if (state == MOVEMENT_STATE.MOVING) {
 			animTimer += delta;
-			walkTimer += delta;
-			worldX = Interpolation.linear.apply(srcX, destX, animTimer / WALK_TIME_PER_TILE);
-			worldY = Interpolation.linear.apply(srcY, destY, animTimer / WALK_TIME_PER_TILE);
-			if (animTimer > WALK_TIME_PER_TILE) {
-				float leftOverTime = animTimer - WALK_TIME_PER_TILE;
+			moveTimer += delta;
+			
+			float timePerTile = WALK_TIME_PER_TILE;
+			if (mode == MOVEMENT_MODE.BIKING) {
+				timePerTile = BIKE_TIME_PER_TILE;
+			}
+			
+			worldX = Interpolation.linear.apply(srcX, destX, animTimer / timePerTile);
+			worldY = Interpolation.linear.apply(srcY, destY, animTimer / timePerTile);
+			if (animTimer > timePerTile) {
+				float leftOverTime = animTimer - timePerTile;
 				finishMove();
 				if (moveRequestThisFrame) { // keep walking using the same animation time
 					if (move(facing)) {
 						animTimer += leftOverTime;
-						worldX = Interpolation.linear.apply(srcX, destX, animTimer / WALK_TIME_PER_TILE);
-						worldY = Interpolation.linear.apply(srcY, destY, animTimer / WALK_TIME_PER_TILE);
+						worldX = Interpolation.linear.apply(srcX, destX, animTimer / timePerTile);
+						worldY = Interpolation.linear.apply(srcY, destY, animTimer / timePerTile);
 					}
 				} else {
-					walkTimer = 0f;
+					moveTimer = 0f;
 				}
 			}
 		}
-		if (state == ACTOR_STATE.REFACING) {
+		if (state == MOVEMENT_STATE.REFACING) {
 			animTimer += delta;
 			if (animTimer > REFACE_TIME) {
-				state = ACTOR_STATE.STANDING;
+				state = MOVEMENT_STATE.STILL;
 			}
 		}
 		moveRequestThisFrame = false;
 	}
 	
 	public boolean reface(DIRECTION dir) {
-		if (state != ACTOR_STATE.STANDING) { // can only reface when standing
+		if (state != MOVEMENT_STATE.STILL) { // can only reface when standing
 			return false;
 		}
 		if (facing == dir) { // can't reface if we already face a direction
 			return true;
 		}
 		facing = dir;
-		state = ACTOR_STATE.REFACING;
+		state = MOVEMENT_STATE.REFACING;
 		animTimer = 0f;
 		return true;
 	}
@@ -108,7 +124,7 @@ public class Actor implements YSortable {
 	 * This is used when loading maps, and in dialogue.
 	 */
 	public boolean refaceWithoutAnimation(DIRECTION dir) {
-		if (state != ACTOR_STATE.STANDING) { // can only reface when standing
+		if (state != MOVEMENT_STATE.STILL) { // can only reface when standing
 			return false;
 		}
 		this.facing = dir;
@@ -121,7 +137,7 @@ public class Actor implements YSortable {
 	 * @return		If the move can be performed
 	 */
 	public boolean move(DIRECTION dir) {
-		if (state == ACTOR_STATE.WALKING) {
+		if (state == MOVEMENT_STATE.MOVING) {
 			if (facing == dir) {
 				moveRequestThisFrame = true;
 			}
@@ -167,7 +183,7 @@ public class Actor implements YSortable {
 	 */
 	public boolean moveWithoutNotifications(DIRECTION dir) {
 		noMoveNotifications = true;
-		if (state == ACTOR_STATE.WALKING) {
+		if (state == MOVEMENT_STATE.MOVING) {
 			if (facing == dir) {
 				moveRequestThisFrame = true;
 			}
@@ -213,11 +229,11 @@ public class Actor implements YSortable {
 		this.worldX = x;
 		this.worldY = y;
 		animTimer = 0f;
-		state = ACTOR_STATE.WALKING;
+		state = MOVEMENT_STATE.MOVING;
 	}
 	
 	private void finishMove() {
-		state = ACTOR_STATE.STANDING;
+		state = MOVEMENT_STATE.STILL;
 		this.worldX = destX;
 		this.worldY = destY;
 		this.srcX = 0;
@@ -258,12 +274,22 @@ public class Actor implements YSortable {
 	}
 	
 	public TextureRegion getSprite() {
-		if (state == ACTOR_STATE.WALKING) {
-			return animations.getWalking(facing).getKeyFrame(walkTimer);
-		} else if (state == ACTOR_STATE.STANDING) {
-			return animations.getStanding(facing);
-		} else if (state == ACTOR_STATE.REFACING) {
-			return animations.getWalking(facing).getKeyFrames()[0];
+		if (mode == MOVEMENT_MODE.WALKING) {
+			if (state == MOVEMENT_STATE.MOVING) {
+				return animations.getWalking(facing).getKeyFrame(moveTimer);
+			} else if (state == MOVEMENT_STATE.STILL) {
+				return animations.getStanding(facing);
+			} else if (state == MOVEMENT_STATE.REFACING) {
+				return animations.getWalking(facing).getKeyFrames()[0];
+			}
+		} else if (mode == MOVEMENT_MODE.BIKING) {
+			if (state == MOVEMENT_STATE.MOVING) {
+				return animations.getBiking(facing).getKeyFrame(moveTimer);
+			} else if (state == MOVEMENT_STATE.STILL) {
+				return animations.getBiking(facing).getKeyFrames()[1];
+			} else if (state == MOVEMENT_STATE.REFACING) {
+				return animations.getBiking(facing).getKeyFrames()[0];
+			}
 		}
 		return animations.getStanding(DIRECTION.SOUTH);
 	}
@@ -285,8 +311,20 @@ public class Actor implements YSortable {
 		this.world.addActor(this);
 	}
 	
-	public ACTOR_STATE getState() {
+	public MOVEMENT_STATE getMovementState() {
 		return state;
+	}
+	
+	/**
+	 * Changes the Actors mode of movement
+	 * @param newMode
+	 */
+	public void setMode(MOVEMENT_MODE newMode) {
+		this.mode = newMode;
+	}
+	
+	public MOVEMENT_MODE getMovementMode() {
+		return mode;
 	}
 	
 	public DIRECTION getFacing() {

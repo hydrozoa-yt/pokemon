@@ -14,6 +14,7 @@ import com.hydrozoa.pokemon.model.DIRECTION;
  */
 public class AnimationSet {
 	
+	private Map<DIRECTION, Animation> biking;
 	private Map<DIRECTION, Animation> walking;
 	private Map<DIRECTION, TextureRegion> standing;
 	
@@ -35,6 +36,18 @@ public class AnimationSet {
 		standing.put(DIRECTION.SOUTH, standSouth);
 		standing.put(DIRECTION.EAST, standEast);
 		standing.put(DIRECTION.WEST, standWest);
+	}
+	
+	public void addBiking(Animation bikeNorth, Animation bikeSouth, Animation bikeEast, Animation bikeWest) {
+		biking = new HashMap<DIRECTION, Animation>();
+		biking.put(DIRECTION.NORTH, bikeNorth);
+		biking.put(DIRECTION.SOUTH, bikeSouth);
+		biking.put(DIRECTION.EAST, bikeEast);
+		biking.put(DIRECTION.WEST, bikeWest);
+	}
+	
+	public Animation getBiking(DIRECTION dir) {
+		return biking.get(dir);
 	}
 	
 	public Animation getWalking(DIRECTION dir) {

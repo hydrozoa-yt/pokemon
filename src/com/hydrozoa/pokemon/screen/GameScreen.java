@@ -93,6 +93,11 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer {
 				atlas.findRegion("brendan_stand_east"),
 				atlas.findRegion("brendan_stand_west")
 		);
+		animations.addBiking(
+				new Animation(0.3f/2f, atlas.findRegions("brendan_bike_north"), PlayMode.LOOP_PINGPONG), 
+				new Animation(0.3f/2f, atlas.findRegions("brendan_bike_south"), PlayMode.LOOP_PINGPONG), 
+				new Animation(0.3f/2f, atlas.findRegions("brendan_bike_east"), PlayMode.LOOP_PINGPONG), 
+				new Animation(0.3f/2f, atlas.findRegions("brendan_bike_west"), PlayMode.LOOP_PINGPONG));
 		
 		Array<World> loadedWorlds = app.getAssetManager().getAll(World.class, new Array<World>());
 		for (World w : loadedWorlds) {

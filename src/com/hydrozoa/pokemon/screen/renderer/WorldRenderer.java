@@ -90,17 +90,27 @@ public class WorldRenderer {
 		Collections.reverse(forRendering);
 		
 		for (YSortable loc : forRendering) {
+			TextureRegion sprite = loc.getSprite();
+			float widthInTiles = ((float)sprite.getRegionWidth()/Settings.TILE_SIZE);
+			float heightInTiles = ((float)sprite.getRegionHeight()/Settings.TILE_SIZE);
 			if (loc instanceof Actor) {
 				Actor a = (Actor)loc;
 				if (!a.isVisible()) {
 					continue;
 				}
+				batch.draw(sprite, 
+						worldStartX+loc.getWorldX()*Settings.SCALED_TILE_SIZE+0.5f*Settings.SCALED_TILE_SIZE-widthInTiles/2*Settings.SCALED_TILE_SIZE,
+						worldStartY+loc.getWorldY()*Settings.SCALED_TILE_SIZE,
+						Settings.SCALED_TILE_SIZE*widthInTiles,
+						Settings.SCALED_TILE_SIZE*heightInTiles);
+				continue;
+			} else {
+				batch.draw(sprite, 
+						worldStartX+loc.getWorldX()*Settings.SCALED_TILE_SIZE,
+						worldStartY+loc.getWorldY()*Settings.SCALED_TILE_SIZE,
+						Settings.SCALED_TILE_SIZE*widthInTiles,
+						Settings.SCALED_TILE_SIZE*heightInTiles);
 			}
-			batch.draw(loc.getSprite(), 
-					worldStartX+loc.getWorldX()*Settings.SCALED_TILE_SIZE,
-					worldStartY+loc.getWorldY()*Settings.SCALED_TILE_SIZE,
-					Settings.SCALED_TILE_SIZE*loc.getSizeX(),
-					Settings.SCALED_TILE_SIZE*loc.getSizeY());
 		}
 		
 		renderedObjects.clear();
