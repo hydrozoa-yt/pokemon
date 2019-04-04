@@ -88,114 +88,198 @@ brendan_bike_west
   orig: 24, 24
   offset: 0, 0
   index: 2
-brendan_stand_east
+brendan_run_east
   rotate: false
   xy: 184, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
-  index: -1
-brendan_walk_east
-  rotate: false
-  xy: 184, 20
-  size: 16, 24
-  orig: 16, 24
-  offset: 0, 0
-  index: 1
-brendan_stand_north
-  rotate: false
-  xy: 202, 20
-  size: 16, 24
-  orig: 16, 24
-  offset: 0, 0
-  index: -1
-brendan_walk_north
+  index: 0
+brendan_run_east
   rotate: false
   xy: 202, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 1
-brendan_stand_south
+brendan_run_east
   rotate: false
   xy: 220, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
-  index: -1
-brendan_walk_south
-  rotate: false
-  xy: 220, 20
-  size: 16, 24
-  orig: 16, 24
-  offset: 0, 0
-  index: 1
-brendan_stand_west
+  index: 2
+brendan_run_north
   rotate: false
   xy: 238, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
-  index: -1
-brendan_walk_west
-  rotate: false
-  xy: 238, 20
-  size: 16, 24
-  orig: 16, 24
-  offset: 0, 0
-  index: 1
-brendan_walk_east
+  index: 0
+brendan_run_north
   rotate: false
   xy: 256, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
-  index: 0
-brendan_walk_east
+  index: 1
+brendan_run_north
   rotate: false
   xy: 346, 60
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 2
-brendan_walk_north
+brendan_run_south
   rotate: false
   xy: 364, 60
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 0
-brendan_walk_north
+brendan_run_south
   rotate: false
   xy: 274, 20
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
-  index: 2
-brendan_walk_south
+  index: 1
+brendan_run_south
   rotate: false
   xy: 382, 76
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
+  index: 2
+brendan_run_west
+  rotate: false
+  xy: 400, 76
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_run_west
+  rotate: false
+  xy: 418, 76
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_run_west
+  rotate: false
+  xy: 436, 76
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_stand_east
+  rotate: false
+  xy: 454, 76
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_east
+  rotate: false
+  xy: 454, 76
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_stand_north
+  rotate: false
+  xy: 472, 76
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_north
+  rotate: false
+  xy: 472, 76
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_stand_south
+  rotate: false
+  xy: 490, 76
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_south
+  rotate: false
+  xy: 490, 76
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_stand_west
+  rotate: false
+  xy: 382, 50
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_west
+  rotate: false
+  xy: 382, 50
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_walk_east
+  rotate: false
+  xy: 400, 50
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_walk_east
+  rotate: false
+  xy: 418, 50
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_walk_north
+  rotate: false
+  xy: 436, 50
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_walk_north
+  rotate: false
+  xy: 454, 50
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_walk_south
+  rotate: false
+  xy: 472, 50
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
   index: 0
 brendan_walk_south
   rotate: false
-  xy: 400, 76
+  xy: 490, 50
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 2
 brendan_walk_west
   rotate: false
-  xy: 418, 76
+  xy: 292, 36
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 0
 brendan_walk_west
   rotate: false
-  xy: 436, 76
+  xy: 310, 36
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
@@ -300,35 +384,35 @@ grass1
   index: -1
 grass2
   rotate: false
-  xy: 382, 58
+  xy: 382, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 grass_dirtpatch
   rotate: false
-  xy: 400, 58
+  xy: 400, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 indoor_tiles
   rotate: false
-  xy: 418, 58
+  xy: 418, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 indoor_tiles_shadow
   rotate: false
-  xy: 436, 58
+  xy: 436, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 labDoor
   rotate: false
-  xy: 454, 76
+  xy: 328, 36
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
@@ -356,7 +440,7 @@ oldale_house
   index: -1
 redDoor
   rotate: false
-  xy: 472, 76
+  xy: 346, 34
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
@@ -370,7 +454,7 @@ rug
   index: -1
 sign
   rotate: false
-  xy: 454, 58
+  xy: 454, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -391,42 +475,42 @@ small_house_mirror
   index: -1
 wall_bottom
   rotate: false
-  xy: 472, 58
+  xy: 472, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_top
   rotate: false
-  xy: 490, 58
+  xy: 490, 32
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 woodenDoor
   rotate: false
-  xy: 490, 76
+  xy: 364, 34
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 0
 woodenDoor
   rotate: false
-  xy: 292, 36
+  xy: 304, 10
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 1
 woodenDoor
   rotate: false
-  xy: 310, 36
+  xy: 322, 10
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
   index: 2
 woodenDoor
   rotate: false
-  xy: 328, 36
+  xy: 340, 8
   size: 16, 24
   orig: 16, 24
   offset: 0, 0
