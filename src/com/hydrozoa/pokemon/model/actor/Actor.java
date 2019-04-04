@@ -29,16 +29,19 @@ public class Actor implements YSortable {
 	private int srcX, srcY;
 	private int destX, destY;
 	private float animTimer;
-	private float WALK_TIME_PER_TILE = 0.3f;
-	private float BIKE_TIME_PER_TILE = 0.1f;
 	private float REFACE_TIME = 0.1f;
 	private boolean noMoveNotifications = false;
 	
 	private float moveTimer;
 	private boolean moveRequestThisFrame;
 	
+	private float WALK_TIME_PER_TILE = 0.4f;	// seconds to spend on each tile when walking
+	private float RUN_TIME_PER_TILE = 0.25f;		// seconds to spend on each tile when running
+	private float BIKE_TIME_PER_TILE = 0.1f;	// seconds to spend on each tile when biking
+	
 	private MOVEMENT_STATE state;		// if the Actor is currently moving, standing or refacing
-	private MOVEMENT_MODE mode;			// if Actor is running or walking etc
+	private MOVEMENT_MODE currentMode;	// if Actor is running or walking etc
+	private MOVEMENT_MODE nextMode;		// next time a movement is made, this mode will be used (used for running transition)
 	
 	private AnimationSet animations;
 	
@@ -52,7 +55,8 @@ public class Actor implements YSortable {
 		this.worldX = x;
 		this.worldY = y;
 		this.animations = animations;
-		this.mode = MOVEMENT_MODE.WALKING;
+		this.currentMode = MOVEMENT_MODE.WALKING;
+		this.nextMode = MOVEMENT_MODE.WALKING;
 		this.state = MOVEMENT_STATE.STILL;
 		this.facing = DIRECTION.SOUTH;
 	}
@@ -76,9 +80,17 @@ public class Actor implements YSortable {
 			animTimer += delta;
 			moveTimer += delta;
 			
-			float timePerTile = WALK_TIME_PER_TILE;
-			if (mode == MOVEMENT_MODE.BIKING) {
+			float timePerTile;
+			switch (currentMode) {
+			case BIKING:
 				timePerTile = BIKE_TIME_PER_TILE;
+				break;
+			case RUNNING:
+				timePerTile = RUN_TIME_PER_TILE;
+				break;
+			case WALKING:
+			default:
+				timePerTile = WALK_TIME_PER_TILE;
 			}
 			
 			worldX = Interpolation.linear.apply(srcX, destX, animTimer / timePerTile);
@@ -134,7 +146,7 @@ public class Actor implements YSortable {
 	/**
 	 * Initializes a move. If you want to move an Actor, use this method.
 	 * @param dir	Direction to move
-	 * @return		If the move can be performed
+	 * @return		If the move was started
 	 */
 	public boolean move(DIRECTION dir) {
 		if (state == MOVEMENT_STATE.MOVING) {
@@ -230,6 +242,7 @@ public class Actor implements YSortable {
 		this.worldY = y;
 		animTimer = 0f;
 		state = MOVEMENT_STATE.MOVING;
+		this.currentMode = this.nextMode;
 	}
 	
 	private void finishMove() {
@@ -250,7 +263,7 @@ public class Actor implements YSortable {
 	/**
 	 * Changes the Players position internally.
 	 */
-	public void teleport(int x, int y) {
+	public void setCoords(int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.worldX = x;
@@ -274,7 +287,7 @@ public class Actor implements YSortable {
 	}
 	
 	public TextureRegion getSprite() {
-		if (mode == MOVEMENT_MODE.WALKING) {
+		if (currentMode == MOVEMENT_MODE.WALKING) {
 			if (state == MOVEMENT_STATE.MOVING) {
 				return animations.getWalking(facing).getKeyFrame(moveTimer);
 			} else if (state == MOVEMENT_STATE.STILL) {
@@ -282,13 +295,21 @@ public class Actor implements YSortable {
 			} else if (state == MOVEMENT_STATE.REFACING) {
 				return animations.getWalking(facing).getKeyFrames()[0];
 			}
-		} else if (mode == MOVEMENT_MODE.BIKING) {
+		} else if (currentMode == MOVEMENT_MODE.BIKING) {
 			if (state == MOVEMENT_STATE.MOVING) {
 				return animations.getBiking(facing).getKeyFrame(moveTimer);
 			} else if (state == MOVEMENT_STATE.STILL) {
 				return animations.getBiking(facing).getKeyFrames()[1];
 			} else if (state == MOVEMENT_STATE.REFACING) {
 				return animations.getBiking(facing).getKeyFrames()[0];
+			}
+		} else if (currentMode == MOVEMENT_MODE.RUNNING) {
+			if (state == MOVEMENT_STATE.MOVING) {
+				return animations.getRunning(facing).getKeyFrame(moveTimer);
+			} else if (state == MOVEMENT_STATE.STILL) {
+				return animations.getStanding(facing);
+			} else if (state == MOVEMENT_STATE.REFACING) {
+				return animations.getRunning(facing).getKeyFrames()[0];
 			}
 		}
 		return animations.getStanding(DIRECTION.SOUTH);
@@ -306,7 +327,7 @@ public class Actor implements YSortable {
 	
 	public void changeWorld(World world, int newX, int newY) {
 		this.world.removeActor(this);
-		this.teleport(newX, newY);
+		this.setCoords(newX, newY);
 		this.world = world;
 		this.world.addActor(this);
 	}
@@ -316,15 +337,15 @@ public class Actor implements YSortable {
 	}
 	
 	/**
-	 * Changes the Actors mode of movement
+	 * Changes the Actors mode of movement, starting from next movement initiation
 	 * @param newMode
 	 */
-	public void setMode(MOVEMENT_MODE newMode) {
-		this.mode = newMode;
+	public void setNextMode(MOVEMENT_MODE newMode) {
+		this.nextMode = newMode;
 	}
 	
 	public MOVEMENT_MODE getMovementMode() {
-		return mode;
+		return currentMode;
 	}
 	
 	public DIRECTION getFacing() {

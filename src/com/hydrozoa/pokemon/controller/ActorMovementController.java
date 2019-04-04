@@ -15,52 +15,67 @@ public class ActorMovementController extends InputAdapter {
 	
 	private Actor player;
 	
-	private boolean[] buttonPress;
-	private float[] buttonTimer;
+	private boolean[] directionPress;		// which arrow-keys are pressed
+	private float[] directionPressTimer;	// how long have they been pressed for
+	
+	private boolean isRunning = false;
 	
 	private float WALK_REFACE_THRESHOLD = 0.07f;
 	
 	public ActorMovementController(Actor p) {
 		this.player = p;
-		buttonPress = new boolean[DIRECTION.values().length];
-		buttonPress[DIRECTION.NORTH.ordinal()] = false;
-		buttonPress[DIRECTION.SOUTH.ordinal()] = false;
-		buttonPress[DIRECTION.EAST.ordinal()] = false;
-		buttonPress[DIRECTION.WEST.ordinal()] = false;
-		buttonTimer = new float[DIRECTION.values().length];
-		buttonTimer[DIRECTION.NORTH.ordinal()] = 0f;
-		buttonTimer[DIRECTION.SOUTH.ordinal()] = 0f;
-		buttonTimer[DIRECTION.EAST.ordinal()] = 0f;
-		buttonTimer[DIRECTION.WEST.ordinal()] = 0f;
+		directionPress = new boolean[DIRECTION.values().length];
+		directionPress[DIRECTION.NORTH.ordinal()] = false;
+		directionPress[DIRECTION.SOUTH.ordinal()] = false;
+		directionPress[DIRECTION.EAST.ordinal()] = false;
+		directionPress[DIRECTION.WEST.ordinal()] = false;
+		directionPressTimer = new float[DIRECTION.values().length];
+		directionPressTimer[DIRECTION.NORTH.ordinal()] = 0f;
+		directionPressTimer[DIRECTION.SOUTH.ordinal()] = 0f;
+		directionPressTimer[DIRECTION.EAST.ordinal()] = 0f;
+		directionPressTimer[DIRECTION.WEST.ordinal()] = 0f;
 	}
 	
 	@Override
 	public boolean keyDown(int keycode) {
+		// enable running if appropiate
+		if (keycode == Keys.SHIFT_LEFT && player.getMovementMode() == MOVEMENT_MODE.WALKING) {
+			player.setNextMode(MOVEMENT_MODE.RUNNING);
+		}
+		
+		// update arrow key pressing
 		if (keycode == Keys.UP) {
-			buttonPress[DIRECTION.NORTH.ordinal()] = true;
+			directionPress[DIRECTION.NORTH.ordinal()] = true;
 		}
 		if (keycode == Keys.DOWN) {
-			buttonPress[DIRECTION.SOUTH.ordinal()] = true;
+			directionPress[DIRECTION.SOUTH.ordinal()] = true;
 		}
 		if (keycode == Keys.LEFT) {
-			buttonPress[DIRECTION.WEST.ordinal()] = true;
+			directionPress[DIRECTION.WEST.ordinal()] = true;
 		}
 		if (keycode == Keys.RIGHT) {
-			buttonPress[DIRECTION.EAST.ordinal()] = true;
+			directionPress[DIRECTION.EAST.ordinal()] = true;
 		}
 		return false;
 	}
 	
 	@Override
 	public boolean keyUp(int keycode) {
+		// disable running if appropiate
+		if (keycode == Keys.SHIFT_LEFT && player.getMovementMode() == MOVEMENT_MODE.RUNNING) {
+			player.setNextMode(MOVEMENT_MODE.WALKING);
+		}
+		
+		// update biking/not biking
 		if (keycode == Keys.F1) {
 			if (player.getMovementMode() == MOVEMENT_MODE.WALKING) {
-				player.setMode(MOVEMENT_MODE.BIKING);
-			} else {
-				player.setMode(MOVEMENT_MODE.WALKING);
+				player.setNextMode(MOVEMENT_MODE.BIKING);
+			} else if (player.getMovementMode() == MOVEMENT_MODE.BIKING) {
+				player.setNextMode(MOVEMENT_MODE.WALKING);
 			}
 		}
 		
+		// update arrow key pressing// update 
 		if (keycode == Keys.UP) {
 			releaseDirection(DIRECTION.NORTH);
 		}
@@ -77,19 +92,19 @@ public class ActorMovementController extends InputAdapter {
 	}
 	
 	public void update(float delta) {
-		if (buttonPress[DIRECTION.NORTH.ordinal()]) {
+		if (directionPress[DIRECTION.NORTH.ordinal()]) {
 			updateDirection(DIRECTION.NORTH, delta);
 			return;
 		}
-		if (buttonPress[DIRECTION.SOUTH.ordinal()]) {
+		if (directionPress[DIRECTION.SOUTH.ordinal()]) {
 			updateDirection(DIRECTION.SOUTH, delta);
 			return;
 		}
-		if (buttonPress[DIRECTION.WEST.ordinal()]) {
+		if (directionPress[DIRECTION.WEST.ordinal()]) {
 			updateDirection(DIRECTION.WEST, delta);
 			return;
 		}
-		if (buttonPress[DIRECTION.EAST.ordinal()]) {
+		if (directionPress[DIRECTION.EAST.ordinal()]) {
 			updateDirection(DIRECTION.EAST, delta);
 			return;
 		}
@@ -99,7 +114,7 @@ public class ActorMovementController extends InputAdapter {
 	 * Runs every frame, for each direction whose key is pressed.
 	 */
 	private void updateDirection(DIRECTION dir, float delta) {
-		buttonTimer[dir.ordinal()] += delta;
+		directionPressTimer[dir.ordinal()] += delta;
 		considerMove(dir);
 	}
 	
@@ -107,19 +122,19 @@ public class ActorMovementController extends InputAdapter {
 	 * Runs when a key is released, argument is its corresponding direction.
 	 */
 	private void releaseDirection(DIRECTION dir) {
-		buttonPress[dir.ordinal()] = false;
+		directionPress[dir.ordinal()] = false;
 		considerReface(dir);
-		buttonTimer[dir.ordinal()] = 0f;
+		directionPressTimer[dir.ordinal()] = 0f;
 	}
 	
 	private void considerMove(DIRECTION dir) {
-		if (buttonTimer[dir.ordinal()] > WALK_REFACE_THRESHOLD) {
+		if (directionPressTimer[dir.ordinal()] > WALK_REFACE_THRESHOLD) {
 			player.move(dir);
 		}
 	}
 	
 	private void considerReface(DIRECTION dir) {
-		if (buttonTimer[dir.ordinal()] < WALK_REFACE_THRESHOLD) {
+		if (directionPressTimer[dir.ordinal()] < WALK_REFACE_THRESHOLD) {
 			player.reface(dir);
 		}
 	}

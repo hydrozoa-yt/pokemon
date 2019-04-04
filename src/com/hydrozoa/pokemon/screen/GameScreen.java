@@ -84,20 +84,25 @@ public class GameScreen extends AbstractScreen implements CutscenePlayer {
 		TextureAtlas atlas = app.getAssetManager().get("res/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
 		
 		AnimationSet animations = new AnimationSet(
-				new Animation(0.3f/2f, atlas.findRegions("brendan_walk_north"), PlayMode.LOOP_PINGPONG),
-				new Animation(0.3f/2f, atlas.findRegions("brendan_walk_south"), PlayMode.LOOP_PINGPONG),
-				new Animation(0.3f/2f, atlas.findRegions("brendan_walk_east"), PlayMode.LOOP_PINGPONG),
-				new Animation(0.3f/2f, atlas.findRegions("brendan_walk_west"), PlayMode.LOOP_PINGPONG),
+				new Animation(0.4f/2f, atlas.findRegions("brendan_walk_north"), PlayMode.LOOP_PINGPONG),
+				new Animation(0.4f/2f, atlas.findRegions("brendan_walk_south"), PlayMode.LOOP_PINGPONG),
+				new Animation(0.4f/2f, atlas.findRegions("brendan_walk_east"), PlayMode.LOOP_PINGPONG),
+				new Animation(0.4f/2f, atlas.findRegions("brendan_walk_west"), PlayMode.LOOP_PINGPONG),
 				atlas.findRegion("brendan_stand_north"),
 				atlas.findRegion("brendan_stand_south"),
 				atlas.findRegion("brendan_stand_east"),
 				atlas.findRegion("brendan_stand_west")
 		);
 		animations.addBiking(
-				new Animation(0.3f/2f, atlas.findRegions("brendan_bike_north"), PlayMode.LOOP_PINGPONG), 
-				new Animation(0.3f/2f, atlas.findRegions("brendan_bike_south"), PlayMode.LOOP_PINGPONG), 
-				new Animation(0.3f/2f, atlas.findRegions("brendan_bike_east"), PlayMode.LOOP_PINGPONG), 
-				new Animation(0.3f/2f, atlas.findRegions("brendan_bike_west"), PlayMode.LOOP_PINGPONG));
+				new Animation(0.4f/2f, atlas.findRegions("brendan_bike_north"), PlayMode.LOOP_PINGPONG), 
+				new Animation(0.4f/2f, atlas.findRegions("brendan_bike_south"), PlayMode.LOOP_PINGPONG), 
+				new Animation(0.4f/2f, atlas.findRegions("brendan_bike_east"), PlayMode.LOOP_PINGPONG), 
+				new Animation(0.4f/2f, atlas.findRegions("brendan_bike_west"), PlayMode.LOOP_PINGPONG));
+		animations.addRunning(
+				new Animation(0.25f/2f, atlas.findRegions("brendan_run_north"), PlayMode.LOOP_PINGPONG), 
+				new Animation(0.25f/2f, atlas.findRegions("brendan_run_south"), PlayMode.LOOP_PINGPONG), 
+				new Animation(0.25f/2f, atlas.findRegions("brendan_run_east"), PlayMode.LOOP_PINGPONG), 
+				new Animation(0.25f/2f, atlas.findRegions("brendan_run_west"), PlayMode.LOOP_PINGPONG));
 		
 		Array<World> loadedWorlds = app.getAssetManager().getAll(World.class, new Array<World>());
 		for (World w : loadedWorlds) {
