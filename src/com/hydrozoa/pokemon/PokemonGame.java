@@ -69,8 +69,8 @@ public class PokemonGame extends Game {
 		 * LOAD VERSION
 		 */
 		version = Gdx.files.internal("version.txt").readString();
-		System.out.println("Pokémon by Hydrozoa, version "+version);
-		Gdx.app.getGraphics().setTitle("Pokémon by Hydrozoa, version "+version);
+		System.out.println("PokÃ©mon by Hydrozoa, version "+version);
+		Gdx.app.getGraphics().setTitle("PokÃ©mon by Hydrozoa, version "+version);
 		
 		/*
 		 * LOADING SHADERS
